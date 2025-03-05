@@ -13,4 +13,4 @@ Following the tutorial here: [R and R Studio tutorial](https://alexd106.github.i
 ### Administrative area: California
 ### Time: 2010 - 2020
 ## A download link will be generated.  The output file will be a tab-delimited CSV file.
-### Example output file for Macrocystis pyrifera
+### Example output file for Macrocystis pyrifera: [macrocystis_pyrifera.csv](https://github.com/levisimons/WLAC/blob/main/macrocystis_pyrifera.csv)
