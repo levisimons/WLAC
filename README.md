@@ -1,5 +1,7 @@
 # WLAC
-Ecological code repository for West Los Angeles College
+Ecological code repository for West Los Angeles College.
+
+The following instructions are for getting the data needed to run the species distribution modeling script [Marine_SDM.R](https://github.com/levisimons/WLAC/blob/main/Marine_SDM.R).
 
 # To install R and R Studio
 Following the tutorial here: [R and R Studio tutorial](https://alexd106.github.io/intro2R/setup.html).
