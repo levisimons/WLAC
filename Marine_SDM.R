@@ -20,3 +20,7 @@ california_coast <- st_read("CA_cst3nm.shp")
 #Crop the California coastal boundary to a bounding box covering the Southern California Bight
 #Northwestern point of study area is Point Conception (34.4486° N, 120.4716° W), southeastern point is Tijuana Beach Promenade (32.5340° N, 117.1235° W)
 scb_boundaries <-  st_crop(california_coast,st_bbox(c(xmin=-120.4716,xmax=-117.1235,ymin=32.5340,ymax=34.4486)))
+
+#Generate a set of random background points, equal in number to actual occurrences.
+num_occurrences <- nrow(input_species_data)
+background_points = sf::st_sample(scb_boundaries, size=num_occurrences)
