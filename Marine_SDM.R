@@ -36,3 +36,25 @@ background_points <- sf::st_as_sf(background_points,coords = c("X","Y"),  crs = 
 
 #Retain species occurrence data from within the SCB
 scb_species_points <- st_intersection(input_species_points, scb_boundaries) 
+
+#Get a list of all environmental map layers with the file extension .nc (NetCDF)
+map_layers <- list.files(path="MapLayers",pattern = "\\.nc$")
+
+#Convert all of the NetCDF map layers from Bio-Oracle into clipped rasters in tif format.
+#Check if list of tif layers has already been generated first.
+if(length(list.files(path="MapLayers",pattern = "\\.tif$"))<length(map_layers)){
+  for(map_layer in map_layers){
+    #Read in marine layer
+    marine_layer <- brick(paste("MapLayers/",map_layer,sep=""))
+    #Get base file name
+    map_layer_name <- gsub("\\.nc$","", map_layer)
+    #Convert from NetCDF to tif format.
+    writeRaster(marine_layer, paste("MapLayers/",map_layer_name,".tif",sep=""), bylayer=FALSE)
+    #Read in tiff formatted raster.
+    marine_raster <- raster(paste("MapLayers/",map_layer_name,".tif",sep=""))
+    #Crop the raster to the study extent.
+    scb_raster <- crop(marine_raster,scb_boundaries)
+    #Export the cropped raster.
+    writeRaster(scb_raster,paste("MapLayers/",map_layer_name,".tif",sep=""), bylayer=FALSE,overwrite=TRUE)
+  }
+}
