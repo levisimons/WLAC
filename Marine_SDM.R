@@ -58,3 +58,12 @@ if(length(list.files(path="MapLayers",pattern = "\\.tif$"))<length(map_layers)){
     writeRaster(scb_raster,paste("MapLayers/",map_layer_name,".tif",sep=""), bylayer=FALSE,overwrite=TRUE)
   }
 }
+
+#Get a list of all environmental rasters in tif format.
+scb_layers <- list.files(path="MapLayers",pattern = "\\.tif$")
+
+#Build a raster stack of all environmental rasters
+scb_rasters <- stack(paste("MapLayers/",scb_layers,sep=""))
+
+#Update column names so the column names match the environmental raster file names
+names(scb_rasters) <- scb_layers
