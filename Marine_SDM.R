@@ -24,3 +24,12 @@ scb_boundaries <-  st_crop(california_coast,st_bbox(c(xmin=-120.4716,xmax=-117.1
 #Generate a set of random background points, equal in number to actual occurrences.
 num_occurrences <- nrow(input_species_data)
 background_points = sf::st_sample(scb_boundaries, size=num_occurrences)
+
+#Convert single column coordinates to standard longitude/latitude columns
+background_points <- sf::st_coordinates(background_points)
+
+#Convert background points object to a data table
+background_points <- as.data.table(background_points)
+
+#Convert from longitude (X) and latitude (Y) columns to sf object.
+background_points <- sf::st_as_sf(background_points,coords = c("X","Y"),  crs = 4326)
