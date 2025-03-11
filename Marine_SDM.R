@@ -28,6 +28,9 @@ background_points = sf::st_sample(scb_boundaries, size=num_occurrences)
 #Convert single column coordinates to standard longitude/latitude columns
 background_points <- sf::st_coordinates(background_points)
 
+#Retain species occurrence data from within the SCB
+scb_species_points <- st_intersection(input_species_points, scb_boundaries) 
+
 #Convert background points object to a data table
 background_points <- as.data.table(background_points)
 
