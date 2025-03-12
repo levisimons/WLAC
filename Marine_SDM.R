@@ -69,6 +69,12 @@ scb_rasters <- stack(paste("MapLayers/",scb_layers,sep=""))
 #Update column names so the column names match the environmental raster file names
 names(scb_rasters) <- scb_layers
 
+#Extract raster values at occurrence points
+scb_extracted <- raster::extract(scb_rasters, scb_species_points) 
+
+#Update column names so the column names match the environmental raster file names
+colnames(scb_extracted) <- scb_layers
+
 #Remove empty rows
 scb_extracted <- as.data.frame(scb_extracted[complete.cases(scb_extracted),])
 
