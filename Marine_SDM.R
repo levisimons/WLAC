@@ -68,3 +68,45 @@ scb_rasters <- stack(paste("MapLayers/",scb_layers,sep=""))
 
 #Update column names so the column names match the environmental raster file names
 names(scb_rasters) <- scb_layers
+
+#Remove empty rows
+scb_extracted <- as.data.frame(scb_extracted[complete.cases(scb_extracted),])
+
+#Add presence column
+scb_extracted$presence <- 1
+
+#Set presence variable to factor for modeling.
+scb_extracted$presence <- as.factor(scb_extracted$presence)
+
+#Extract raster values at background points
+background_extracted <- raster::extract(scb_rasters, background_points)
+
+#Update column names so the column names match the environmental raster file names
+colnames(background_extracted) <- scb_layers
+
+#Remove empty rows
+background_extracted <- as.data.frame(background_extracted[complete.cases(background_extracted),])
+
+#Add presence column
+background_extracted$presence <- 0
+
+#Set presence variable to factor for modeling.
+background_extracted$presence <- as.factor(background_extracted$presence)
+
+#Set a predictable random number generator seed for reproducibility.
+set.seed(1)
+
+#Create a subset of the presence/background data with the following properties:
+#1. Composed of a randomly selected 80% of rows from scb_extracted.
+#2. Composed of rows randomly selected from background_extracted. The number of rows will also be 80% of rows found in scb_extracted.
+#3. Merged these two subsets together.
+subset_extracted <- rbind(scb_extracted[sample(nrow(scb_extracted),0.8*nrow(scb_extracted)),],background_extracted[sample(nrow(background_extracted),0.8*nrow(scb_extracted)),])
+
+#Run a random forest model over this data subset.
+rf1 <- suppressWarnings(tuneRF(x=subset_extracted[,!(colnames(subset_extracted) %in% "presence")],y=subset_extracted$presence,stepFactor=1,plot=FALSE,doBest=TRUE))
+
+#Make a prediction raster from the random forest model and store it in a list.
+raster_predict_list[[i]] <- dismo::predict(scb_rasters,rf1,progress='text')
+
+#Plot predicted raster
+plot(raster_predict_list[[i]])
