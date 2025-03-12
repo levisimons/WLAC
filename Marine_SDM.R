@@ -106,7 +106,16 @@ subset_extracted <- rbind(scb_extracted[sample(nrow(scb_extracted),0.8*nrow(scb_
 rf1 <- suppressWarnings(tuneRF(x=subset_extracted[,!(colnames(subset_extracted) %in% "presence")],y=subset_extracted$presence,stepFactor=1,plot=FALSE,doBest=TRUE))
 
 #Make a prediction raster from the random forest model and store it in a list.
-raster_predict_list[[i]] <- dismo::predict(scb_rasters,rf1,progress='text')
+raster_predict_list <- dismo::predict(scb_rasters,rf1,progress='text')
 
 #Plot predicted raster
-plot(raster_predict_list[[i]])
+plot(raster_predict_list)
+
+#Store relative importance of variable outputs as a temporary data frame.
+tmp <- as.data.frame(rf1$importance)
+
+#Set one column to store the variable names from the row names.
+tmp$VariableName <- rownames(tmp)
+
+#Store this importance data frame in the importance list.
+importance_list <- tmp
