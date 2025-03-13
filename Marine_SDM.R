@@ -2,6 +2,8 @@ rm(list=ls())
 require(data.table)
 require(sf)
 require(raster)
+require(dismo)
+require(randomForest)
 
 #Set working directory
 wd <- ""
