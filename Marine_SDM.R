@@ -134,12 +134,3 @@ specificity <- rf1$confusion[[4]] / (rf1$confusion[[4]]+rf1$confusion[[3]])
 TSS <- sensitivity+specificity-1
 #Store TSS results
 accuracy_list <- TSS
-
-#Loop through each environmental variable and store the partial response outputs in a temporary data frame.
-for(scb_layer in scb_layers){
-  tmp <- as.data.frame(partialPlot(rf1,subset_extracted[,!(colnames(subset_extracted) %in% "presence")],x.var=c(scb_layer),plot=F))
-  tmp$y <- exp(tmp$y) / (1+exp(tmp$y))
-  colnames(tmp) <- c(scb_layer,"Detection_Probability")
-  partial_plot_list[[j]] <- tmp
-  j <- j+1
-}
