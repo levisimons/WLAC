@@ -3,6 +3,7 @@
 2. [BioClim](https://www.worldclim.org/data/bioclim.html). Terrestrial climate layers, including future modeled versions. Coordinate Reference System (CRS): EPSG:4326. Resolution: 30 arc-seconds (approximately 750 m at the equator). Extent: Global, all terrestrial environments.
 3. [SoilGrids](https://soilgrids.org/). Soil characteristics. Coordinate Reference System (CRS): EPSG:4326. Resolution: 250 m. Extent: Global, all terrestrial environments.
 4. [Shuttle Radar Topography Mission](https://srtm.csi.cgiar.org/srtmdata/). Topographic data. Coordinate Reference System (CRS): EPSG:4326. Resolution: 90 m. Extent: Global, all terrestrial environments.
+5. [Global human modification](https://zenodo.org/records/7534895). Indices describing the degree to which humans have altered a parcel of land. Coordinate Reference System (CRS): EPSG:4326. Resolution: 300 m. Extent: Global, all terrestrial environments.
 
 # Species occurrence data
 1. [GBIF](http://www.gbif.org). The global data of species observations.
