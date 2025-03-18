@@ -6,6 +6,7 @@ require(dismo)
 require(randomForest)
 require(viridis)
 require(ggplot2)
+require(plyr)
 
 #Set working directory
 wd <- ""
