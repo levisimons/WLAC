@@ -4,6 +4,7 @@ require(sf)
 require(raster)
 require(dismo)
 require(randomForest)
+require(viridis)
 
 #Set working directory
 wd <- ""
@@ -164,3 +165,39 @@ raster_predict <- calc(raster_predict, sum)
 #Save raster output.
 writeRaster(raster_predict,"macrocystis_pyrifera_prediction.tif",overwrite=T)
 
+# Convert sum prediction raster into data frame for mapping.
+raster_predict_df <- as.data.frame(rasterToPoints(raster_predict, xy=TRUE))
+# Map the frequency with which a species shows up across the study area.
+ggplot() + 
+  geom_sf(data = scb_boundaries, size = 1.5, color = "white", fill = "white") + 
+  ggtitle("Prediction frequency of Macrocystis pyrifera\nIn the Southern California Bight") + 
+  geom_raster(data = raster_predict_df, aes(x=x, y=y, fill=layer))+
+  scale_fill_gradientn(colours=c("blue","orange"),name=paste("Frequency\n(Out of ",i_max," models)",sep=""),transform="log1p")
+
+#Calculate the mean TSS for the models
+mean(accuracy_list)
+sd(accuracy_list)
+
+#Convert list of importance data frames to a single data frame.
+importance_total <- rbind.fill(importance_list)
+#Calculate the mean relative importance for each variable.
+importance_total <- aggregate(x=importance_total$MeanDecreaseGini,by = list(importance_total$VariableName),FUN = mean)
+#Rename columns.
+colnames(importance_total) <- c("VariableName","Importance")
+#Convert importance to rank importance.
+importance_total$Importance <- rank(importance_total$Importance)
+#Save rank importance table.
+write.table(importance_total,"macrocystis_pyrifera_rank_importance.txt",quote=FALSE,sep="\t",row.names = FALSE)
+
+#Collapse partial plot outputs into single data frame.
+partial_plots <- rbind.fill(partial_plot_list)
+partial_plots <- as.data.frame(partial_plots)
+write.table(partial_plots,"macrocystis_pyrifera_partial_plots.txt",quote=FALSE,sep="\t",row.names = FALSE)
+partial_plots <- read.table("macrocystis_pyrifera_partial_plots.txt", header=TRUE, sep="\t",as.is=T,skip=0,fill=TRUE,check.names=FALSE, encoding = "UTF-8")
+k <- 10
+ggplot(partial_plots, aes(x=!!sym(scb_layers[k]), y=Detection_Probability) )+
+  xlab(scb_layers[k])+ylab("Detection\nProbability")+
+  geom_bin2d(bins = 50)+
+  scale_fill_continuous(type = "viridis",name=paste("Frequency\n(Out of ",i_max," models)",sep=""))+
+  stat_smooth(aes(y = Detection_Probability, fill=Detection_Probability),method="auto",formula=y~x,color="violet",fill="red",n=0.1*sum(!is.na(partial_plots[,scb_layers[k]])))+
+  theme_bw(base_size=25)
