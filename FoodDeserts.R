@@ -1,3 +1,4 @@
+#Background on code is here: https://docs.google.com/document/d/11_zQAQ2co13Ac9W0ZCp0K-YhFZ6vb1DocPAndwitIQU/edit?usp=sharing
 rm(list=ls())
 require(data.table)
 require(sf)
@@ -19,6 +20,7 @@ CommunityGardens <- st_transform(CommunityGardens,crs=st_crs(2229))
 #Read in food deserts map shapefiles
 Food_Deserts_Input <- st_read("Food_Deserts.shp")
 
+#Loop through variables to rasterize from the food desert map shapefiles. Store outputs in a list of map rasters.
 selected_variables <- c("PovertyRat","LA1and10")
 i=1
 selected_layer <- c()
