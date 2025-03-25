@@ -25,3 +25,12 @@ for(selected_variable in selected_variables){
   selected_layer[[i]] <- st_rasterize(Food_Deserts_Input %>% dplyr::select(!!selected_variable, geometry))
   i=i+1
 }
+
+#Set a blank raster which matches the shape and extent of the map layers
+r <- rast(selected_layer[[1]])
+values(r) <- NA
+#Create a map layer which calculates distances from community gardens
+distance_community_gardens <- distanceFromPoints(raster(r), st_coordinates(CommunityGardens))
+#Clip distance to community gardens layer to match the other map layers (boundaries of LA county)
+distance_community_gardens <- crop(distance_community_gardens, Food_Deserts_Input)
+distance_community_gardens <- mask(distance_community_gardens,Food_Deserts_Input)
