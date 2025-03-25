@@ -2,6 +2,7 @@ rm(list=ls())
 require(data.table)
 require(sf)
 require(raster)
+require(stars)
 
 #Set working directory
 wd <- ""
