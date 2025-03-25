@@ -3,6 +3,7 @@ require(data.table)
 require(sf)
 require(raster)
 require(stars)
+require(terra)
 
 #Set working directory
 wd <- ""
