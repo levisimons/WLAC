@@ -5,6 +5,7 @@ require(sf)
 require(raster)
 require(stars)
 require(terra)
+require(dplyr)
 
 #Set working directory
 wd <- ""
@@ -46,5 +47,35 @@ distance_community_gardens <- mask(distance_community_gardens,Food_Deserts_Input
 #Add in distance to community gardens layer to the model input stack
 food_desert_variables <- stack(food_desert_variables,distance_community_gardens)
 
+#Read in CAL Enviro Screen shapefiles
+CAL_Enviro_Screen <- st_read("CES4 Final Shapefile.shp")
+#Transform the coordinates to a CRS of 2229 to match the map layers
+CAL_Enviro_Screen <- st_transform(CAL_Enviro_Screen,crs=st_crs(2229))
+
+#Set environmental variables to rasterize
+environmental_variables <- c("CIscore","Educatn")
+#Initialize index and list of map layers object
+j=1
+environmental_layer <- c()
+#Loop through variables to rasterize from the food desert map shapefiles. Store outputs in a list of map rasters.
+for(environmental_variable in environmental_variables){
+  #Set raster values of -999 to NA before saving them.
+  tmp <-raster(rast(st_rasterize(CAL_Enviro_Screen %>% dplyr::select(!!environmental_variable, geometry))))
+  values(tmp)[values(tmp) <= -999] = NA
+  #Clip CAL Enviro Screen layers to match the other map layers (boundaries of LA county)
+  tmp <- crop(tmp, Food_Deserts_Input)
+  tmp <- mask(tmp,Food_Deserts_Input)
+  #Resample CAL Enviro Screen layers to match to match those of the other food desert layers
+  tmp <- resample(tmp, food_desert_variables[[1]], method = "bilinear")  # Use "near" for categorical data
+  environmental_layer[[j]] <- tmp
+  j=j+1
+}
+
+#Stack all of the CAL Enviro Screen variables into a single object
+CAL_Enviro_Screen_layers <- stack(environmental_layer)
+
+#Add in CAL Enviro Screen layers to the model input stack
+food_desert_variables <- stack(food_desert_variables,CAL_Enviro_Screen_layers)
+
 #Rename map layers in raster stack
-names(food_desert_variables) <- c(selected_variables,"Distance_From_Community_Gardens")
+names(food_desert_variables) <- c(selected_variables,"Distance_From_Community_Gardens",environmental_variables)
