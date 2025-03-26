@@ -20,14 +20,19 @@ CommunityGardens <- st_transform(CommunityGardens,crs=st_crs(2229))
 #Read in food deserts map shapefiles
 Food_Deserts_Input <- st_read("Food_Deserts.shp")
 
-#Loop through variables to rasterize from the food desert map shapefiles. Store outputs in a list of map rasters.
+#Choose variables to use in modeling
 selected_variables <- c("PovertyRat","LA1and10")
+#Initialize index and list of map layers object
 i=1
 selected_layer <- c()
+#Loop through variables to rasterize from the food desert map shapefiles. Store outputs in a list of map rasters.
 for(selected_variable in selected_variables){
-  selected_layer[[i]] <- st_rasterize(Food_Deserts_Input %>% dplyr::select(!!selected_variable, geometry))
+  selected_layer[[i]] <- raster(rast(st_rasterize(Food_Deserts_Input %>% dplyr::select(!!selected_variable, geometry))))
   i=i+1
 }
+
+#Stack all of the food desert variables so far into a single object
+food_desert_variables <- stack(selected_layer)
 
 #Set a blank raster which matches the shape and extent of the map layers
 r <- rast(selected_layer[[1]])
@@ -37,3 +42,9 @@ distance_community_gardens <- distanceFromPoints(raster(r), st_coordinates(Commu
 #Clip distance to community gardens layer to match the other map layers (boundaries of LA county)
 distance_community_gardens <- crop(distance_community_gardens, Food_Deserts_Input)
 distance_community_gardens <- mask(distance_community_gardens,Food_Deserts_Input)
+
+#Add in distance to community gardens layer to the model input stack
+food_desert_variables <- stack(food_desert_variables,distance_community_gardens)
+
+#Rename map layers in raster stack
+names(food_desert_variables) <- c(selected_variables,"Distance_From_Community_Gardens")
