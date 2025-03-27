@@ -22,7 +22,7 @@ CommunityGardens <- st_transform(CommunityGardens,crs=st_crs(2229))
 Food_Deserts_Input <- st_read("Food_Deserts.shp")
 
 #Choose variables to use in modeling
-selected_variables <- c("PovertyRat","LA1and10")
+selected_variables <- c("PovertyRat","LILATrac_1")
 #Initialize index and list of map layers object
 i=1
 selected_layer <- c()
@@ -53,7 +53,7 @@ CAL_Enviro_Screen <- st_read("CES4 Final Shapefile.shp")
 CAL_Enviro_Screen <- st_transform(CAL_Enviro_Screen,crs=st_crs(2229))
 
 #Set environmental variables to rasterize
-environmental_variables <- c("CIscore","Educatn")
+environmental_variables <- c("CIscore")
 #Initialize index and list of map layers object
 j=1
 environmental_layer <- c()
@@ -77,5 +77,34 @@ CAL_Enviro_Screen_layers <- stack(environmental_layer)
 #Add in CAL Enviro Screen layers to the model input stack
 food_desert_variables <- stack(food_desert_variables,CAL_Enviro_Screen_layers)
 
+#Read in Healthy Places Index shapefile
+Healthy_Places_Index <- st_read("Healthy_Places_Index_(3.0).shp")
+#Transform the coordinates to a CRS of 2229 to match the map layers
+Healthy_Places_Index <- st_transform(Healthy_Places_Index,crs=st_crs(2229))
+#Choose variables to use in modeling
+HPI_variables <- c("LEB","bachelor_1","insured_pc","clean_en_1","transpor_1","automobi_1","parkacce_1")
+#Initialize index and list of map layers object
+k=1
+HPI_layer <- c()
+#Loop through variables to rasterize from the food desert map shapefiles. Store outputs in a list of map rasters.
+for(HPI_variable in HPI_variables){
+  #Set raster values of -999 to NA before saving them.
+  tmp <-raster(rast(st_rasterize(Healthy_Places_Index %>% dplyr::select(!!HPI_variable, geometry))))
+  values(tmp)[values(tmp) <= -999] = NA
+  #Clip HPI layers to match the other map layers (boundaries of LA county)
+  tmp <- crop(tmp,Food_Deserts_Input)
+  tmp <- mask(tmp,Food_Deserts_Input)
+  #Resample HPI layers to match to match those of the other food desert layers
+  tmp <- resample(tmp, food_desert_variables[[1]], method = "bilinear")  # Use "near" for categorical data
+  HPI_layer[[k]] <- tmp
+  k=k+1
+}
+
+#Stack all of the CAL Enviro Screen variables into a single object
+HPI_layers <- stack(HPI_layer)
+
+#Add in CAL Enviro Screen layers to the model input stack
+food_desert_variables <- stack(food_desert_variables,HPI_layers)
+
 #Rename map layers in raster stack
-names(food_desert_variables) <- c(selected_variables,"Distance_From_Community_Gardens",environmental_variables)
+names(food_desert_variables) <- c(selected_variables,"Distance_From_Community_Gardens",environmental_variables,HPI_variables)
