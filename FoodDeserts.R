@@ -15,6 +15,9 @@ require(DescTools)
 wd <- ""
 setwd(wd)
 
+#Set random number string
+set.seed(1)
+
 #Read in community garden coordinates
 CommunityGardens <- fread(input="CommunityGardens.csv",sep=",")
 #Convert community garden coordinates to spatial coordinates with a CRS of 4326
@@ -145,7 +148,7 @@ accuracy_list <- c()
 #Create an empty list to store partial plot outputs.
 partial_plot_list <- c()
 j <- 1
-i_max <- 20
+i_max <- 100
 for(i in 1:i_max){
   #Create a subset of the food desert data with the following properties:
   #1. Composed of a randomly selected 80% of rows from food_desert_extracted.
@@ -195,6 +198,7 @@ raster_predict <- calc(raster_predict, mean)
 
 #Get the mean Pearson correlation coefficient between predicted and actual life expectancy
 FisherZInv(mean(FisherZ(accuracy_list)))
+FisherZInv(sd(FisherZ(accuracy_list)))
 
 #Convert list of importance data frames to a single data frame.
 importance_total <- rbind.fill(importance_list)
@@ -210,7 +214,7 @@ partial_plots <- rbind.fill(partial_plot_list)
 partial_plots <- as.data.frame(partial_plots)
 
 #Make heat map partial dependence plots for life expectancy
-k <- 3
+k <- 1
 ggplot(partial_plots, aes(x=!!sym(food_desert_layers[k]), y=`Life Expectancy at Birth`) )+
   xlab(food_desert_layers[k])+ylab("`Life Expectancy\nat Birth`")+
   geom_bin2d(bins = 50)+
