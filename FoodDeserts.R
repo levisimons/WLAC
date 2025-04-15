@@ -222,3 +222,13 @@ ggplot(partial_plots, aes(x=!!sym(food_desert_layers[k]), y=`Life Expectancy at 
   scale_fill_continuous(type = "viridis",name=paste("Frequency\n(Out of ",i_max," models)",sep=""))+
   stat_smooth(aes(y = `Life Expectancy at Birth`, fill=`Life Expectancy at Birth`),method="auto",formula=y~x,color="violet",fill="red",n=0.1*sum(!is.na(partial_plots[,food_desert_layers[k]])))+
   theme_bw(base_size=25)
+
+#Set a color palette for a map of distances from community gardens
+pal <- colorRampPalette(c("darkgreen","green","yellowgreen","yellow","white"))
+#Map out distances from community gardens
+plot(distance_community_gardens, col = pal(100))
+#Map out variables zoomed into mainland Los Angeles County
+plot(food_desert_variables[[1]],col=plasma(100),ext=extent(6200000, 6700000, 1700000, 2150000))
+#Test to see how correlated the model variables are to each other
+test=layerStats(food_desert_variables, 'pearson', na.rm=T)
+corr_matrix=test$'pearson correlation coefficient'
