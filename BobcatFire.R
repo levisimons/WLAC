@@ -12,6 +12,7 @@ require(randomForest)
 require(DescTools)
 require(geodata)
 require(ggplot2)
+require(viridis)
 
 #Set working directory
 wd <- ""
