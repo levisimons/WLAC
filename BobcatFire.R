@@ -44,3 +44,11 @@ presence_points <- st_as_sf(presence_points, coords = c("decimalLongitude","deci
 
 #Clip species data to Los Angeles National Forest
 presence_points <- st_intersection(presence_points, LANF)
+
+#Read in burn severity layer
+#Google Earth Engine export code: https://code.earthengine.google.com/4106294b83776bc9cf8e37aa0fc8d4c3
+burn_severity <- raster(paste("mean_nbr_",year_selected,"_la.tif",sep=""))
+
+#Clip burn severity to Los Angeles National Forest boundaries
+burn_severity <- crop(burn_severity,LANF)
+burn_severity <- mask(burn_severity,LANF)
