@@ -53,3 +53,51 @@ burn_severity <- raster(paste("mean_nbr_",year_selected,"_la.tif",sep=""))
 #Clip burn severity to Los Angeles National Forest boundaries
 burn_severity <- crop(burn_severity,LANF)
 burn_severity <- mask(burn_severity,LANF)
+
+#Read in NDVI layer
+#Google Earth Engine export code: https://code.earthengine.google.com/d15d0aba4b09e7dca63307576d2e7bcb
+ndvi <- raster(paste("mean_ndvi_",year_selected,"_la.tif",sep=""))
+
+#Resample NDVI layer to match spatial resolution of burn severity layer
+ndvi <- resample(ndvi, burn_severity, method = "bilinear")
+
+#Clip burn severity to Los Angeles National Forest boundaries
+ndvi <- crop(ndvi,LANF)
+ndvi <- mask(ndvi,LANF)
+
+#Note: all Bioclim variables have a CRS of EPSG:4326
+#Get all environmental variables.
+#srad	incident solar radiation	kJ m-2 day-1
+#wind	wind speed (2 m above the ground)	m s-1
+#bio for bioclimatic variables
+env_vars <- c("wind","bio")
+#Loop through each variable category and clip out climate data for Cumbria.
+i=1
+environmental_layer <- c()
+for(env_var in env_vars){
+  #Read in environmental layer for the USA
+  tmp <- worldclim_tile(var = env_var, lon = mean(c(LANF_bbox["xmin"], LANF_bbox["xmax"])), 
+                        lat = mean(c(LANF_bbox["ymin"], LANF_bbox["ymax"])),
+                        res = 0.5, path = tempdir())
+  #Clip climate layers to the boundaries of Cumbria
+  tmp <- crop(tmp,LANF)
+  tmp <- mask(tmp,LANF)
+  #Store environmental layer in list.
+  if(env_var!="bio"){
+    environmental_layer[[i]] <- resample(raster(tmp), burn_severity, method = "bilinear")
+    i=i+1
+  }
+  #Store all of the bioclimatic variables as well.
+  if(env_var=="bio"){
+    #Loop through each bioclimatic variable
+    for(j in 1:length(names(tmp))){
+      environmental_layer[[i]] <- resample(raster(tmp[[j]]), burn_severity, method = "bilinear")
+      i=i+1
+    }
+  }
+  
+}
+#Stack environmental layers
+environmental_layers <- stack(environmental_layer)
+environmental_layers <- stack(environmental_layers,burn_severity)
+environmental_layers <- stack(environmental_layers,ndvi)
