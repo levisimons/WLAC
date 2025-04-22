@@ -15,7 +15,7 @@ require(ggplot2)
 require(viridis)
 
 #Set working directory
-wd <- ""
+wd <- "/Users/levisimons/Desktop/WLAC/BobcatFire"
 setwd(wd)
 
 #Set random number string
@@ -67,7 +67,6 @@ ndvi <- mask(ndvi,LANF)
 
 #Note: all Bioclim variables have a CRS of EPSG:4326
 #Get all environmental variables.
-#srad	incident solar radiation	kJ m-2 day-1
 #wind	wind speed (2 m above the ground)	m s-1
 #bio for bioclimatic variables
 env_vars <- c("wind","bio")
@@ -79,7 +78,7 @@ for(env_var in env_vars){
   tmp <- worldclim_tile(var = env_var, lon = mean(c(LANF_bbox["xmin"], LANF_bbox["xmax"])), 
                         lat = mean(c(LANF_bbox["ymin"], LANF_bbox["ymax"])),
                         res = 0.5, path = tempdir())
-  #Clip climate layers to the boundaries of Cumbria
+  #Clip climate layers to the boundaries of LANF
   tmp <- crop(tmp,LANF)
   tmp <- mask(tmp,LANF)
   #Store environmental layer in list.
