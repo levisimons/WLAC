@@ -15,7 +15,7 @@ require(ggplot2)
 require(viridis)
 
 #Set working directory
-wd <- "/Users/levisimons/Desktop/WLAC/BobcatFire"
+wd <- ""
 setwd(wd)
 
 #Set random number string
@@ -82,9 +82,12 @@ for(env_var in env_vars){
   tmp <- crop(tmp,LANF)
   tmp <- mask(tmp,LANF)
   #Store environmental layer in list.
-  if(env_var!="bio"){
-    environmental_layer[[i]] <- resample(raster(tmp), burn_severity, method = "bilinear")
-    i=i+1
+  if(env_var=="wind"){
+    #Loop through each wind speed month variable
+    for(j in 1:length(names(tmp))){
+      environmental_layer[[i]] <- resample(raster(tmp[[j]]), burn_severity, method = "bilinear")
+      i=i+1
+    }
   }
   #Store all of the bioclimatic variables as well.
   if(env_var=="bio"){
