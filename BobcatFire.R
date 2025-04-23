@@ -70,7 +70,7 @@ ndvi <- mask(ndvi,LANF)
 #wind	wind speed (2 m above the ground)	m s-1
 #bio for bioclimatic variables
 env_vars <- c("wind","bio")
-#Loop through each variable category and clip out climate data for Cumbria.
+#Loop through each variable category and clip out climate data for LA National Forest.
 i=1
 environmental_layer <- c()
 for(env_var in env_vars){
@@ -103,3 +103,27 @@ for(env_var in env_vars){
 environmental_layers <- stack(environmental_layer)
 environmental_layers <- stack(environmental_layers,burn_severity)
 environmental_layers <- stack(environmental_layers,ndvi)
+
+#Read in soil map layers downloaded from https://soilgrids.org/
+soil_vars <- list.files(path=".",pattern = "^Soil_.*\\.tif$")
+soil_layer <- c()
+j=1
+for(soil_var in soil_vars){
+  tmp <- raster(soil_var)
+  #Transform the coordinates to a CRS of 4326
+  tmp <- projectRaster(tmp,crs = "+init=epsg:4326")
+  #Clip soil layers to the boundaries of LA National Forest
+  tmp <- crop(tmp,LANF)
+  tmp <- mask(tmp,LANF)
+  #Resample layers to align with other map layers
+  if(names(tmp)=="Soil_Groups"){
+    tmp <- resample(tmp, burn_severity, method = "ngb")
+  } else{
+    tmp <- resample(tmp, burn_severity, method = "bilinear")
+  }
+  soil_layer[[j]] <- tmp
+  j=j+1
+}
+#Stack more environmental layers
+soil_layers <- stack(soil_layer)
+environmental_layers <- stack(environmental_layers,soil_layers)
