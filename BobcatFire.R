@@ -232,3 +232,23 @@ raster_predict <- calc(raster_predict, sum)
 writeRaster(raster_predict,paste("nicotiana_glauca_prediction_",year_selected,".tif",sep=""),overwrite=T)
 #Plot raster output.
 plot(raster_predict,col=viridis(i_max))
+
+# Convert full raster to data frame
+raster_df <- as.data.frame(raster_predict, xy = TRUE)
+names(raster_df)[3] <- "value"
+
+# Extract non-zero points
+raster_points <- subset(raster_df, value > 0.5*i_max)
+
+#Plot prediction raster
+ggplot() +
+  geom_raster(data = raster_df, aes(x = x, y = y, fill = value)) +
+  scale_fill_gradient(low = "white", high = "white", na.value = "grey") +
+  guides(fill = "none") +
+  geom_point(data = raster_points, aes(x = x, y = y, color = value), size = 1) +
+  scale_color_viridis_c() +
+  coord_fixed() +
+  theme_minimal() +
+  labs(title = paste("Predicted occurrences of tree tobacco",sep=""),
+       x="Longitude degrees East",y = "Latitude degrees North",
+       color = paste("Predicted frequency\nout of ",i_max," models",sep=""))
