@@ -252,3 +252,18 @@ ggplot() +
   labs(title = paste("Predicted occurrences of tree tobacco",sep=""),
        x="Longitude degrees East",y = "Latitude degrees North",
        color = paste("Predicted frequency\nout of ",i_max," models",sep=""))
+
+#Convert list of importance data frames to a single data frame.
+importance_total <- rbind.fill(importance_list)
+#Calculate the mean relative importance for each variable.
+importance_total <- aggregate(x=importance_total$MeanDecreaseGini,by = list(importance_total$VariableName),FUN = mean)
+#Rename columns.
+colnames(importance_total) <- c("VariableName","Importance")
+#Convert importance to rank importance.
+importance_total$Importance <- rank(desc(importance_total$Importance))
+#Save rank importance table.
+write.table(importance_total,paste("nicotiana_glauca_rank_importance",year_selected,".txt",sep=""),quote=FALSE,sep="\t",row.names = FALSE)
+
+#Calculate the mean TSS for the models
+mean(accuracy_list)
+sd(accuracy_list)
