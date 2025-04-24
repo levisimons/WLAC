@@ -267,3 +267,29 @@ write.table(importance_total,paste("nicotiana_glauca_rank_importance",year_selec
 #Calculate the mean TSS for the models
 mean(accuracy_list)
 sd(accuracy_list)
+
+#Collapse partial plot outputs into single data frame.
+partial_plots <- rbind.fill(partial_plot_list)
+partial_plots <- as.data.frame(partial_plots)
+write.table(partial_plots,paste("nicotiana_glauca_partial_plots",year_selected,".txt",sep=""),quote=FALSE,sep="\t",row.names = FALSE)
+partial_plots <- read.table(paste("nicotiana_glauca_partial_plots",year_selected,".txt",sep=""), header=TRUE, sep="\t",as.is=T,skip=0,fill=TRUE,check.names=FALSE, encoding = "UTF-8")
+#Set soil types to categorical for plotting
+partial_plots$Soil_Groups <- as.factor(partial_plots$Soil_Groups)
+
+k <- 29
+#Plot heat maps for continuous data.
+if(!is.factor(partial_plots[,names(environmental_layers[[k]])])){
+  ggplot(partial_plots, aes(x=!!sym(names(environmental_layers[[k]])), y=Detection_Probability) )+
+    xlab(names(environmental_layers[[k]]))+ylab("Detection\nProbability")+
+    geom_bin2d(bins = 50)+
+    scale_fill_continuous(type = "viridis",name=paste("Frequency\n(Out of ",i_max," models)",sep=""))+
+    stat_smooth(aes(y = Detection_Probability, fill=Detection_Probability),method="auto",formula=y~x,color="violet",fill="red",n=0.1*sum(!is.na(partial_plots[,names(environmental_layers[[k]])])))+
+    theme_bw(base_size=25)
+}
+#Plot violin plots for categorical data.
+if(is.factor(partial_plots[,names(environmental_layers[[k]])])){
+  ggplot(partial_plots, aes(x=!!sym(names(environmental_layers[[k]])), y=Detection_Probability) )+
+    xlab(names(environmental_layers[[k]]))+ylab("Detection\nProbability")+
+    geom_violin(aes(x=!!sym(names(environmental_layers[[k]])), y=Detection_Probability))+
+    theme_bw(base_size=25)
+}
