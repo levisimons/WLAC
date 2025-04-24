@@ -170,3 +170,65 @@ background_extracted$presence <- as.factor(background_extracted$presence)
 
 #Set soil groups variable to factor for modeling.
 background_extracted$Soil_Groups <- as.factor(as.integer(background_extracted$Soil_Groups))
+
+#Create an empty list to store prediction rasters.
+raster_predict_list <- c()
+#Create an empty list to store relative importance outputs.
+importance_list <- c()
+#Create an empty list to store accuracy outputs.
+accuracy_list <- c()
+#Create an empty list to store partial plot outputs.
+partial_plot_list <- c()
+j <- 1
+i_max <- 25
+for(i in 1:i_max){
+  #Create a subset of the presence/background data with the following properties:
+  #1. Composed of a randomly selected 80% of rows from scb_extracted.
+  #2. Composed of rows randomly selected from background_extracted. The number of rows will also be 80% of rows found in scb_extracted.
+  #3. Merged these two subsets together.
+  subset_extracted <- rbind(presence_extracted[sample(nrow(presence_extracted),0.8*nrow(presence_extracted)),],background_extracted[sample(nrow(background_extracted),0.8*nrow(presence_extracted)),])
+  
+  #Run a random forest model over this data subset.
+  rf1 <- suppressWarnings(tuneRF(x=subset_extracted[,!(colnames(subset_extracted) %in% "presence")],y=subset_extracted$presence,stepFactor=1,plot=FALSE,doBest=TRUE))
+  
+  #Make a prediction raster from the random forest model and store it in a list.
+  raster_predict_list[[i]] <- dismo::predict(environmental_layers,rf1,progress='text')
+  #Plot predicted raster
+  plot(raster_predict_list[[i]])
+  
+  #Store relative importance of variable outputs as a temporary data frame.
+  tmp <- as.data.frame(rf1$importance)
+  #Set one column to store the variable names from the row names.
+  tmp$VariableName <- rownames(tmp)
+  #Store this importance data frame in the importance list.
+  importance_list[[i]] <- tmp
+  
+  #Calculate the true skill statistic TSS to evaluate model accuracy.
+  sensitivity <- rf1$confusion[[1]] / (rf1$confusion[[1]]+rf1$confusion[[2]])
+  specificity <- rf1$confusion[[4]] / (rf1$confusion[[4]]+rf1$confusion[[3]])
+  TSS <- sensitivity+specificity-1
+  #Store TSS results
+  accuracy_list[i] <- TSS
+  
+  #Loop through each environmental variable and store the partial response outputs in a temporary data frame.
+  for(environmental_layer in names(environmental_layers)){
+    #Store partial plot chart data in a temporary data frame.
+    tmp <- as.data.frame(partialPlot(rf1,subset_extracted[,!(colnames(subset_extracted) %in% "presence")],x.var=c(environmental_layer),plot=F))
+    #Transform logistic probabilities to regular probabilities.
+    tmp$y <- exp(tmp$y) / (1+exp(tmp$y))
+    #Rename probability column
+    colnames(tmp) <- c(environmental_layer,"Detection_Probability")
+    #Store partial plot data in a list of data frames.
+    partial_plot_list[[j]] <- tmp
+    j <- j+1
+  }
+  print(paste(i,Sys.time()))
+}
+#Stack the list of prediction rasters.
+raster_predict <- brick(raster_predict_list)
+#Sum the list of prediction rasters.
+raster_predict <- calc(raster_predict, sum)
+#Save raster output.
+writeRaster(raster_predict,paste("nicotiana_glauca_prediction_",year_selected,".tif",sep=""),overwrite=T)
+#Plot raster output.
+plot(raster_predict,col=viridis(i_max))
