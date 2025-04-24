@@ -127,3 +127,46 @@ for(soil_var in soil_vars){
 #Stack more environmental layers
 soil_layers <- stack(soil_layer)
 environmental_layers <- stack(environmental_layers,soil_layers)
+
+#Extract raster values at occurrence points
+presence_extracted <- as.data.frame(raster::extract(environmental_layers, presence_points))
+
+#Remove empty rows
+presence_extracted <- as.data.frame(presence_extracted[complete.cases(presence_extracted),])
+
+#Add presence/absence column
+presence_extracted$presence <- 1
+
+#Set presence variable to factor for modeling.
+presence_extracted$presence <- as.factor(presence_extracted$presence)
+
+#Set soil groups variable to factor for modeling.
+presence_extracted$Soil_Groups <- as.factor(as.integer(presence_extracted$Soil_Groups))
+
+#Generate a set of random background points, equal in number to actual occurrences.
+num_occurrences <- nrow(presence_extracted)
+background_points = sf::st_sample(LANF, size=num_occurrences)
+
+#Convert single column coordinates to standard longitude/latitude columns
+background_points <- sf::st_coordinates(background_points)
+
+#Convert background points object to a data table
+background_points <- as.data.table(background_points)
+
+#Convert from longitude (X) and latitude (Y) columns to sf object.
+background_points <- sf::st_as_sf(background_points,coords = c("X","Y"),  crs = 4326)
+
+#Extract raster values at background points
+background_extracted <- as.data.frame(raster::extract(environmental_layers, background_points))
+
+#Remove empty rows
+background_extracted <- as.data.frame(background_extracted[complete.cases(background_extracted),])
+
+#Add presence/absence column
+background_extracted$presence <- 0
+
+#Set presence variable to factor for modeling.
+background_extracted$presence <- as.factor(background_extracted$presence)
+
+#Set soil groups variable to factor for modeling.
+background_extracted$Soil_Groups <- as.factor(as.integer(background_extracted$Soil_Groups))
