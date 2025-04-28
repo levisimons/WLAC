@@ -293,3 +293,15 @@ if(is.factor(partial_plots[,names(environmental_layers[[k]])])){
     geom_violin(aes(x=!!sym(names(environmental_layers[[k]])), y=Detection_Probability))+
     theme_bw(base_size=25)
 }
+
+#Plot layer correlations
+cor_test <- layerStats(environmental_layers,stat="pearson",na.rm=T)$`pearson correlation coefficient`
+corrplot::corrplot(cor_test)
+
+#Filter collinear environmental variables
+require(virtualspecies)
+filtered_layers <- removeCollinearity(environmental_layers,method="pearson",
+                                      multicollinearity.cutoff = 0.6,sample.points = TRUE,
+                                      nb.points = 1000,select.variables = TRUE)
+#Create filtered environmental raster stack.
+filtered_environmental_layers <- subset(environmental_layers, subset = filtered_layers)
