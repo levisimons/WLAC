@@ -295,6 +295,7 @@ if(is.factor(partial_plots[,names(environmental_layers[[k]])])){
 }
 
 #Plot layer correlations
+require(corrplot)
 cor_test <- layerStats(environmental_layers,stat="pearson",na.rm=T)$`pearson correlation coefficient`
 corrplot::corrplot(cor_test)
 
