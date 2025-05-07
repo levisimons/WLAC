@@ -14,7 +14,7 @@ require(geodata)
 require(ggplot2)
 
 #Set working directory
-wd <- "/Users/levisimons/Desktop/WLAC/Plovers"
+wd <- ""
 setwd(wd)
 
 #Set random number string
