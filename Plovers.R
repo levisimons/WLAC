@@ -102,3 +102,6 @@ for (i in seq_len(nrow(presence_points))) {
 #Retain only distance filtered points
 presence_points <- presence_points[keep, ]
 
+#Extract raster values at occurrence points
+presence_extracted <- as.data.frame(raster::extract(environmental_layers, presence_points)) 
+
