@@ -80,3 +80,25 @@ env_retain <- removeCollinearity(environmental_layers,method="spearman",
 #Build a raster stack of all environmental rasters with filtered layers.
 environmental_layers <- subset(environmental_layers, env_retain)
 environmental_layers <- stack(environmental_layers)
+
+#Read in plover occurrences from GBIF.
+#GBIF.org (13 April 2025) GBIF Occurrence Download https://doi.org/10.15468/dl.sk6enc
+presence_points <- read.table("Plovers.csv", header=TRUE, sep="\t",as.is=T,skip=0,fill=TRUE,check.names=FALSE, encoding = "UTF-8")
+
+#Convert species data to a spatial points object
+presence_points <- st_as_sf(presence_points, coords = c("decimalLongitude","decimalLatitude"),  crs = 4326) 
+
+#Filter points closer than 9.26km
+#Initialize output
+keep <- rep(TRUE, nrow(presence_points))
+#Loop through points and remove points closer than 9260 meters
+for (i in seq_len(nrow(presence_points))) {
+  if (!keep[i]) next
+  
+  dists <- st_distance(presence_points[i, ], presence_points)
+  close_points <- which(as.numeric(dists) < 1000 & as.numeric(dists) > 0)
+  keep[close_points] <- FALSE
+}
+#Retain only distance filtered points
+presence_points <- presence_points[keep, ]
+
