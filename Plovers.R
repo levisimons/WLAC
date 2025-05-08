@@ -70,3 +70,13 @@ for(env_var in env_vars){
 #Stack environmental layers
 environmental_layers <- stack(environmental_layer)
 environmental_layers <- stack(environmental_layers,soil_layers)
+
+#Filter collinear environmental variables
+#https://onlinelibrary.wiley.com/doi/pdf/10.1002/ece3.10901
+env_retain <- removeCollinearity(environmental_layers,method="spearman",
+                                 multicollinearity.cutoff = 0.75,sample.points = TRUE,
+                                 nb.points = 1000,select.variables = TRUE)
+
+#Build a raster stack of all environmental rasters with filtered layers.
+environmental_layers <- subset(environmental_layers, env_retain)
+environmental_layers <- stack(environmental_layers)
