@@ -67,3 +67,6 @@ for(env_var in env_vars){
     i=i+1
   }
 }
+#Stack environmental layers
+environmental_layers <- stack(environmental_layer)
+environmental_layers <- stack(environmental_layers,soil_layers)
