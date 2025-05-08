@@ -45,3 +45,25 @@ for(soil_var in soil_vars){
 }
 #Stack soil layers
 soil_layers <- stack(soil_layer)
+
+#Note: all Bioclim variables have a CRS of EPSG:4326
+#Get all environmental variables.
+#srad	incident solar radiation	kJ m-2 day-1
+#wind	wind speed (2 m above the ground)	m s-1
+#bio for bioclimatic variables
+env_vars <- c("srad","wind","bio")
+#Loop through each variable category and clip out climate data for Cumbria.
+i=1
+environmental_layer <- c()
+for(env_var in env_vars){
+  #Read in environmental layer for Great Britain
+  tmp <- worldclim_country("GBR",res=0.5,var=env_var,path=tempdir())
+  #Clip climate layers to the boundaries of Cumbria
+  tmp <- crop(tmp,Cumbria)
+  tmp <- mask(tmp,Cumbria)
+  #Loop through each variable group and store it in a list
+  for(j in 1:length(names(tmp))){
+    environmental_layer[[i]] <- resample(raster(tmp[[j]]), soil_layers[[1]], method = "bilinear")
+    i=i+1
+  }
+}
