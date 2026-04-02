@@ -37,7 +37,9 @@ Line 27: Determine the earliest date in our plastic bag data set. This will be u
 
 Line 31: Calculate the number of days from the earliest plastic bag collection date. Treat this value as a number.
 
-Lines 34-37: Make a plot of the number of plastic bags collected versus the number of days since plastic bag data was being collected.
+Lines 34-37: Make a plot of the number of plastic bags collected versus the number of days since plastic bag data was being collected. Your plot should look something like this:
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/0571db6b-e889-4362-8b4c-8c335daff80d" />
+
 
 ## Policy and economics
 
