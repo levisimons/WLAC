@@ -17,8 +17,14 @@ Data was provided by [Heal The Bay](https://healthebay.org/), a non-profit dedic
 
 ## Policy and economics
 
-### Examples of effects of plasatic bag bans
+Once we are able to test our question with data the next step is to figure out the implications. Plastic bags can be banned, but what policies were involved, what were consequences. Here we can begin to investigate the political and economic context of our findings.
+
+### Examples of effects of plastic bag bans
 [A Survey on the Economic Effects of Los Angeles County’s Plastic Bag Ban](https://www.ncpathinktank.org/w18/st340/).
+
+[Considerations, benefits and unintended consequences of banning plastic shopping bags for environmental sustainability: A systematic literature review](https://pmc.ncbi.nlm.nih.gov/articles/PMC8847762/).
+
+[Plastic bag bans in the US reduced plastic bag use by billions, study finds](https://www.weforum.org/stories/2024/01/plastic-bag-bans-reduce-waste/).
 ### Examples of other plastic bag bans
 
 In [California](https://www.cawrecycles.org/list-of-local-bag-bans).
