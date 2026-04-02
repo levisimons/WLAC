@@ -40,6 +40,18 @@ Line 31: Calculate the number of days from the earliest plastic bag collection d
 Lines 34-37: Make a plot of the number of plastic bags collected versus the number of days since plastic bag data was being collected. Your plot should look something like this:
 <img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/0571db6b-e889-4362-8b4c-8c335daff80d" />
 
+Line 43: Now we want to test if the number of plastic bags collected over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our plastic bag counts varies normally or not. A normal distribution, otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a Kolmogorov-Smirnov test. If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Line 50: Here we run a Spearman correlation between the number of bags collected, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a Pearson correlation.
+
+Lines 56 - 61: Within our plastic bag data table we're going to create a new column whose value depends on whether or not plastic bags were collected and counted before or after the bag date of 1 January 2012. We're going to use this new columns to group our count data into before and after ban groups.
+
+Lines 64 - 67: Here we'll plot the counts of plastic bags collected across all beach cleanups before and after the plastic bag ban. We'll use a violin plot to visualize this data. We'll also be using the log of the count values to help stretch the plot which makes the plot easier to read. A violin plot is similar to a bar chart, except that the width of the bar depends on the number of measurements taken with that value. A violin plot gets wide at values which are frequently recorded, and thinner and ones which are not. Your plot should look something like this:
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/64e369d2-5cca-4279-a8b0-cbd6b74124d7" />
+
+Line 72: Just looking at the plot it's hard to tell if there's a significant difference between our before and after picture. To really test this question we'll need to use some statistical tests. The first test we'll use is called a Kruskal-Wallis test. This is another non-parametric test, and it allows for us to test if the ban has a significant influence on the number of bags collected and counted. That is, if we treat the plastic bag ban as a binary variable does it have a significant effect on our count data? If the output significance value, p, is less than 0.05 we can say that it does.
+
+Line 75: Now, can we test if the number of plastic bags collected and counted are significantly lower after the ban. This is done using a non-parametric test known as a Wilcoxon rank-sum test. This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the number of plastic bags found following the ban is significantly lower than before.
 
 ## Policy and economics
 
