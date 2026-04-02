@@ -21,14 +21,14 @@ HTB_input <- HTB_input[!is.na(HTB_input$count),]
 HTB_plastic_bags <- HTB_input[HTB_input$subcategory=='Plastic Bags' & HTB_input$Site!="",]
 
 #Set date column to a standard format
-HTB_plastic_bags$`Collected Date` <- format(mdy_hm(HTB_plastic_bags$`Collected Date`), "%m/%d/%Y")
+HTB_plastic_bags$`Collected Date` <- as.Date(format(mdy_hm(HTB_plastic_bags$`Collected Date`), "%m/%d/%Y"),format="%m/%d/%Y")
 
 #Find the earliest sampling date
 min_date <- min(HTB_plastic_bags$`Collected Date`)
 
 #Create a variable which is the number of days following the earliest sampling date
 #Make it numeric for plotting purposes.
-HTB_plastic_bags$day <- as.numeric(HTB_plastic_bags$`Collected Date`-min(HTB_plastic_bags$`Collected Date`))
+HTB_plastic_bags$day <- as.numeric(HTB_plastic_bags$`Collected Date`-min_date)
 
 #Plot plastic bag counts versus day
 ggplot(data=HTB_plastic_bags,aes(x=day, y=count))+
