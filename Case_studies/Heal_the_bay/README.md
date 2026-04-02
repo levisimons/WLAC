@@ -15,6 +15,20 @@ In order to do our data analysis we will need to set up R and RStudio on our mac
 
 Data was provided by [Heal The Bay](https://healthebay.org/), a non-profit dedicated to the health of the Santa Monica bay. The particular type of data consisted of [beach cleanup](https://healthebay.org/take-part/) records collected by volunteers over the period 2001 - 2025. These records contained information on the type of trash collected, as well as when and where it was collected. A zipped version of this file can be found [here](Case_studies/Heal_the_bay/HTB.csv.zip).
 
+### Running analysis code
+
+The script we can use to get started on analyzing our question statistically can be found [here](Case_studies/Heal_the_bay/HTB.R). But what do the individual parts mean?
+
+Line 1: Clear memory. This is good coding practice to make sure that there's nothing in memory before you run your current script.
+
+Lines 2-4: These are packages you'll want to install to run this script. There are a number of functions which R comes pre-installed with, but for many tasks you'll need to install packages to run other functions.
+
+Lines 8-9: Define a path to your working directory, then tell your computer to set this as your working directory. A working directory is where you'll be running your script, and it's where you'll be telling your computer where to look for information.
+
+Line 14: Read in our data. Once you do this you'll end up storing all of this information in an object called a data table. You can explore what's inside this data table by going to your console in the upper right-hand panel of your RStudio and clicking on the name of the data table. You'll see that the information is stored as a table of values, much like a spreadsheet.
+
+
+
 ## Policy and economics
 
 Once we are able to test our question with data the next step is to figure out the implications. Plastic bags can be banned, but what policies were involved, what were consequences. Here we can begin to investigate the political and economic context of our findings.
