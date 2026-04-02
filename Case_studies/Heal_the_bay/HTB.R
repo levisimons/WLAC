@@ -9,6 +9,7 @@ wd <- ""
 setwd(wd)
 
 #Read in Heal The Bay data
+#Data can be downloaded and unzipped from https://github.com/levisimons/WLAC/blob/main/Case_studies/Heal_the_bay/HTB.csv.zip
 #Make sure data is in your working directory
 HTB_input <- fread(input="HTB.csv",sep=",")
 
