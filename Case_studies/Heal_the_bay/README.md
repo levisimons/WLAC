@@ -11,4 +11,12 @@ Data was provided by [Heal The Bay](https://healthebay.org/), a non-profit dedic
 
 ## Policy and economics
 
+By 1 January 2012, Los Angeles county had put in a ban for single-use plastic bans.
+
+### Examples of effects of plasatic bag bans
+[A Survey on the Economic Effects of Los Angeles County’s Plastic Bag Ban](https://www.ncpathinktank.org/w18/st340/).
+### Examples of other plastic bag bans
+
+In [California](https://www.cawrecycles.org/list-of-local-bag-bans).
+
 ## Art and science communication
