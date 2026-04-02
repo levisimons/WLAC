@@ -2,6 +2,7 @@ rm(list=ls())
 require(data.table)
 require(lubridate)
 require(dplyr)
+require(ggplot2)
 
 #Set working directory
 #Put in the file path to where you want to work on your computer
