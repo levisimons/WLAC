@@ -21,13 +21,23 @@ The script we can use to get started on analyzing our question statistically can
 
 Line 1: Clear memory. This is good coding practice to make sure that there's nothing in memory before you run your current script.
 
-Lines 2-4: These are packages you'll want to install to run this script. There are a number of functions which R comes pre-installed with, but for many tasks you'll need to install packages to run other functions.
+Lines 2-5: These are packages you'll want to install to run this script. There are a number of functions which R comes pre-installed with, but for many tasks you'll need to install packages to run other functions.
 
-Lines 8-9: Define a path to your working directory, then tell your computer to set this as your working directory. A working directory is where you'll be running your script, and it's where you'll be telling your computer where to look for information.
+Lines 9-10: Define a path to your working directory, then tell your computer to set this as your working directory. A working directory is where you'll be running your script, and it's where you'll be telling your computer where to look for information.
 
-Line 14: Read in our data. Once you do this you'll end up storing all of this information in an object called a data table. You can explore what's inside this data table by going to your console in the upper right-hand panel of your RStudio and clicking on the name of the data table. You'll see that the information is stored as a table of values, much like a spreadsheet.
+Line 15: Read in our data. Once you do this you'll end up storing all of this information in an object called a data table. You can explore what's inside this data table by going to your console in the upper right-hand panel of your RStudio and clicking on the name of the data table. You'll see that the information is stored as a table of values, much like a spreadsheet.
 
+Line 18: Remove entries from our data without count values. Since we'll ultimately be using count information to track the number of plastic bags found in beach cleanups we can only use rows in our data table which have count values.
 
+Line 21: Create a plastic bag-specific data table which only contains rows from our data table where the category of garbage is designated as 'Plastic Bags' and there is a specified site location.
+
+Line 24: Reformat the collection date column so that R knows to deal with it as an actual calendar date. By default, R will read in those data values as a string of characters and not know to deal with it as a date.
+
+Line 27: Determine the earliest date in our plastic bag data set. This will be used to calculate the number of days from the start of data collection.
+
+Line 31: Calculate the number of days from the earliest plastic bag collection date. Treat this value as a number.
+
+Lines 34-37: Make a plot of the number of plastic bags collected versus the number of days since plastic bag data was being collected.
 
 ## Policy and economics
 
