@@ -49,14 +49,14 @@ ks.test(HTB_plastic_bags$count,"pnorm")
 #for the number of plastic bags counted.
 cor.test(HTB_plastic_bags$count,HTB_plastic_bags$day,method="spearman")
 
-#Was there a significant drop in plastic bags after the bag ban on 1 January 2011?
+#Was there a significant drop in plastic bags after the bag ban on 1 January 2012?
 
 #Create a grouping variable for when samples were collected
 HTB_plastic_bags <- HTB_plastic_bags %>%
   dplyr::mutate(`Collected Date` = as.Date(`Collected Date`, format = "%m/%d/%Y"),
     ban_status = case_when(
-    `Collected Date` < as.Date("01/01/2011",format="%m/%d/%Y") ~ "before plastic bag ban",
-    `Collected Date` >= as.Date("01/01/2011",format="%m/%d/%Y") ~ "after plastic bag ban"
+    `Collected Date` < as.Date("01/01/2012",format="%m/%d/%Y") ~ "before plastic bag ban",
+    `Collected Date` >= as.Date("01/01/2012",format="%m/%d/%Y") ~ "after plastic bag ban"
   ))
 
 #Violin plot of plastic bag counts whether or not they were collected before or after the plastic bag ban
