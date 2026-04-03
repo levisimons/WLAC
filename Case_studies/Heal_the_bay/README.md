@@ -41,6 +41,8 @@ Lines 34-37: Make a plot of the number of plastic bags collected versus the numb
 
 <img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/0571db6b-e889-4362-8b4c-8c335daff80d" />
 
+Just looking at this plot it's difficult to tell if there's any trend, so we'll need to investigate further.
+
 Line 43: Now we want to test if the number of plastic bags collected over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our plastic bag counts varies normally or not. A normal distribution, otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a Kolmogorov-Smirnov test. If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
 
 Line 50: Here we run a Spearman correlation between the number of bags collected, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a Pearson correlation.
