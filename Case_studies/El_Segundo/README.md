@@ -46,4 +46,13 @@ Line 55: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spea
 
 Lines 58 - 76: Take all of the butterfly map count data and build a table out of it with the following columns: the number of butterflies counted per 30 m wide map cell, the ID number of that map cell, the location of that map cell, and the year.
 
+Line 80: Create a color scale for visualizing the number of butterflies counted per map cell for a selected year.
+
+Line 81: Select a year you want to map the butterfly count data by.
+
+Lines 82 - 92: Create a map, with color scale, for the number of butterflies counted per map cell for a selected year. the map should look something like:
+
+<img width="1162" height="810" alt="image" src="https://github.com/user-attachments/assets/a2f68181-7f15-424d-89c0-e3a2d32debad" />
+
+
 Line 77: Remove any duplicated rows from this butterfly count table.
