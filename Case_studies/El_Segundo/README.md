@@ -46,13 +46,22 @@ Line 55: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spea
 
 Lines 58 - 76: Take all of the butterfly map count data and build a table out of it with the following columns: the number of butterflies counted per 30 m wide map cell, the ID number of that map cell, the location of that map cell, and the year.
 
+Line 77: Remove any duplicated rows from this butterfly count table.
+
 Line 80: Create a color scale for visualizing the number of butterflies counted per map cell for a selected year.
 
 Line 81: Select a year you want to map the butterfly count data by.
 
-Lines 82 - 92: Create a map, with color scale, for the number of butterflies counted per map cell for a selected year. the map should look something like:
+Lines 82 - 92: Create a map, with color scale, for the number of butterflies counted per map cell for a selected year. the map should look something like this for the year 2025:
 
 <img width="1162" height="810" alt="image" src="https://github.com/user-attachments/assets/a2f68181-7f15-424d-89c0-e3a2d32debad" />
 
+Lines 95 - 100: Create a spatial object, for mapping, which has the percent change in butterfly counts by map cell between the periods 2019 and 2025.
 
-Line 77: Remove any duplicated rows from this butterfly count table.
+Line 103: Create a color scale for mapping changes in El Segundo Blue Butterfly grid counts over the period 2019 - 2025.
+
+Lines 104 - 114: Create a map, with color scale, for mapping changes in El Segundo Blue Butterfly grid counts over the period 2019 - 2025. Your map should look something like this:
+
+<img width="1162" height="810" alt="image" src="https://github.com/user-attachments/assets/7a1b02ec-9182-4843-afba-fcd010b98fd2" />
+
+Note that many of the map cells with missing data in this map are locations where no butterflies were counted in 2019, so any percent change is undefined.
