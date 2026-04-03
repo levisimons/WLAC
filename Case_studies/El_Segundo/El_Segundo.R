@@ -6,24 +6,23 @@ require(dplyr)
 require(tidyr)
 require(terra)
 
-#Set working directory. This is the path to where you want to work on your computer.
+#Set working directory
 wd <- ""
 setwd(wd)
 
 #Set sf settings to reduce risk of spatial errors
 sf_use_s2(FALSE)
 
-#Read in project boundary
-project_boundary <- st_read("Project_Boundary.shp")
-
 #Read in butterfly counts by grid for 2019 - 2021
+#Files can be unzipped from https://github.com/levisimons/WLAC/blob/main/Case_studies/El_Segundo/ESBB_GridTotals_2019_2021.zip
 #Make sure all of the other files with the prefix ESBB_GridTotals_2019_2021 are also in the working directory.
 grid_counts_1 <- st_read("ESBB_GridTotals_2019_2021.shp")
-#Read in butterfly counts by grid for 2022 - 2025
+#Read in butterfly counts by grid for 2022 - 2025.
+#Files can be unzipped from https://github.com/levisimons/WLAC/blob/main/Case_studies/El_Segundo/Block_Counts_within_Grids.zip
 #Make sure all of the other files with the prefix Block_Counts_within_Grids are also in the working directory.
 grid_counts_2 <- st_read("Block_Counts_within_Grids.shp")
 
-#Reproject butterfly the spatial object for the counts by grid for 2022 - 2025 to match
+#Fix the coordinate reference system for the spatial object for the counts by grid for 2022 - 2025 to match
 #those of 2019 - 2021. This is needed to eventually combine these data.
 st_crs(grid_counts_2) <- st_crs(grid_counts_1)
 
