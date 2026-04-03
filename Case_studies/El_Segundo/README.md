@@ -2,7 +2,7 @@
 
 ## How to consider the question.
 
-Since 1986 the Los Angeles World Airports (LAWA) has been focused on restoring the habitat of the endangered El Segundo Blue butterfly. These efforts have involved demolishing infrastructure in the LAX dunes, removing invasive plants, and replanting Seacliff Buckwheat (Eriogonum parvifolium), the butterfly's sole food source and life-cycle host.
+Since 1986 the Los Angeles World Airports (LAWA) has been focused on restoring the habitat of the endangered El Segundo Blue butterfly. These efforts have involved demolishing infrastructure in the LAX dunes, removing invasive plants, and replanting Seacliff Buckwheat (Eriogonum parvifolium), the butterfly's sole food source and life-cycle host. As their habitat is being restored, are the number of butterflies significantly increasing?
 
 ## Data analysis
 
