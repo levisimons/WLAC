@@ -23,3 +23,27 @@ Line 1: Clear memory. This is good coding practice to make sure that there's not
 Lines 2-7: These are packages you'll want to install to run this script. There are a number of functions which R comes pre-installed with, but for many tasks you'll need to install packages to run other functions.
 
 Lines 10-11: Define a path to your working directory, then tell your computer to set this as your working directory. A working directory is where you'll be running your script, and it's where you'll be telling your computer where to look for information.
+
+Line 14: This command switches off the default s2 engine (developed by Google), which requires data to be in a projected coordinate system for operations like area, length, and distance if spherical geometry is disabled.This is done to disable spherical geometry in R and reduce the risk of some potential errors in working with spatial data.
+
+Line 19: Read in mapped count data for 2019 - 2021.
+
+Line 23: Read in mapped count data for 2022 - 2025.
+
+Line 27: Make sure that the mapped count data for 2022 - 2025 has the same coordinate reference system as for the mapped count data collected in 2019 - 2021. A coordinate reference system is a framework that defines how coordinates relate to real locations on Earth, bridging the gap between the planet's 3D spherical surface and a 2D flat map.
+
+Lines 32 - 40: Aggregate the total butterfly counts by year and check for aggregate trends over time. Make this table be seven rows long, one for each year. The two columns in the table are to store the year and the total count of butterflies from across the study area.
+
+Line 43 - 46: Plot the total annual butterfly counts by year. You should get a plot like this:
+
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/1d58f7c1-8c6a-40e3-a7c6-08c93147c0f2" />
+
+There definitely appears to be a trend over time, but let's test for how significant it is.
+
+Line 52: Now we want to test if the number of butterflies counted over time is significantly increasing over time. However, to know which test to run we'll need to first determine if the distribution of our butterfly counts varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Line 55: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the number of butterflies counted, and the year of the count. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
+
+Lines 58 - 76: Take all of the butterfly map count data and build a table out of it with the following columns: the number of butterflies counted per 30 m wide map cell, the ID number of that map cell, the location of that map cell, and the year.
+
+Line 77: Remove any duplicated rows from this butterfly count table.
