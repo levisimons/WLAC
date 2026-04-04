@@ -65,3 +65,24 @@ Lines 104 - 114: Create a map, with color scale, for mapping changes in El Segun
 <img width="1162" height="810" alt="image" src="https://github.com/user-attachments/assets/7a1b02ec-9182-4843-afba-fcd010b98fd2" />
 
 Note that many of the map cells with missing data in this map are locations where no butterflies were counted in 2019, so any percent change is undefined.
+
+## Policy and economics
+
+Once we are able to test our question with data the next step is to figure out the implications. There are ongoing efforts in restoring and maintaining the habitat of the El Segundo Blue butterfly, but what policies were involved, what were consequences. Here we can begin to investigate the political and economic context of our findings.
+
+### Background on policies related to the El Segundo Blue butterfly's habitat restoration at LAX
+
+Xerces Society [background on the El Segundo Blue butterfly](https://xerces.org/endangered-species/species-profiles/at-risk-butterflies-moths/el-segundo-blue).
+
+[LAX Dunes Preserve](https://www.lawa.org/media/29382).
+
+[5-YEAR REVIEW of El Segundo Blue Butterfly](https://ecos.fws.gov/docs/tess/species_nonpublish/3501.pdf).
+
+### Background on policies related to the El Segundo Blue butterfly's habitat restoration in general
+
+[South Bay Parkland Conservancy Esplanade Bluffs Restoration Success Story](https://www.esbcoalition.org/success-stories).
+
+The Urban Wildlands Group page on [El Segundo Blue Butterfly](https://www.urbanwildlands.org/esb.html).
+## Art and science communication
+
+Now that we have started to dig into the political and economic implications of our El Segundo Blue butterfly habitat restoration findings, how can we communicate the results in a meaningful way?
