@@ -86,3 +86,13 @@ The Urban Wildlands Group page on [El Segundo Blue Butterfly](https://www.urbanw
 ## Art and science communication
 
 Now that we have started to dig into the political and economic implications of our El Segundo Blue butterfly habitat restoration findings, how can we communicate the results in a meaningful way?
+
+### Art related to the El Segundo Blue butterfly and its habitat restoration
+
+Vickie Henderson art page: [The Endangered El Segundo Blue Butterfly--A Story of Survival](https://vickiehenderson.blogspot.com/2010/12/endangered-el-segundo-blue2.html).
+
+### Art related to the El Segundo Blue butterfly and its habitat restoration
+
+Daily Breeze: [El Segundo teens pen book to raise awareness for endangered native butterfly](https://www.dailybreeze.com/2026/01/07/el-segundo-teens-pen-book-to-raise-awareness-for-endangered-native-butterfly/).
+
+U.S. Fish and Wildlife Service report on [The Recovery Plan for the El Segundo Blue butterfly](https://cms.santamonicabay.org/wp-content/uploads/2016/11/Recovery-Plan-for-the-El-Segundo-Blue-Butterfly.-USFWS.pdf). An example of a report that be made to communicate on issues relating to this species.
