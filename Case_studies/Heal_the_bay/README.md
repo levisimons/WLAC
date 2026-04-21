@@ -63,8 +63,11 @@ Line 84: Now we want to test if the average number of plastic bags collected per
 
 Lines 88 - 91: Here we'll plot the average counts of plastic bags collected per beach cleanup across all beach cleanups before and after the plastic bag ban. We'll use a [violin plot](https://en.wikipedia.org/wiki/Violin_plot) to visualize this data. We'll also be using the log of the count values to help stretch the plot which makes the plot easier to read. A violin plot is similar to a bar chart, except that the width of the bar depends on the number of measurements taken with that value. A violin plot gets wide at values which are frequently recorded, and thinner and ones which are not. Your plot should look something like this:
 
-<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/c965ea51-0c34-4c4f-af40-ab12afc1dc56" />
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/9037756b-3aa1-4dad-afa4-204e30314762" />
 
+Line 95: Just looking at the plot it's hard to tell if there's a significant difference between our before and after picture. To really test this question we'll need to use some statistical tests. The first test we'll use is called a [Kruskal-Wallis test](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This is another non-parametric test, and it allows for us to test if the ban has a significant influence on the number of bags collected and counted. That is, if we treat the plastic bag ban as a binary variable does it have a significant effect on our count data? If the output significance value, p, is less than 0.05 we can say that it does.
+
+Line 98: Now, can we test if the average number of plastic bags collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of plastic bags per beach cleanup found following the ban is significantly lower than before.
 
 ## Policy and economics
 
