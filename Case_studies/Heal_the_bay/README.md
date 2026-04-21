@@ -57,6 +57,15 @@ Line 72: Just looking at the plot it's hard to tell if there's a significant dif
 
 Line 75: Now, can we test if the number of plastic bags collected and counted are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the number of plastic bags found following the ban is significantly lower than before.
 
+Line 78: Now we want to re-check if the plastic ban bag was effective by normalizing the number of plastic bags collected per beach cleanup event, and then seeing if there is a significant decline. We first do this by calculating the average number of bags collected per beach cleanup event.
+
+Line 84: Now we want to test if the average number of plastic bags collected per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our average plastic bag counts varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Lines 88 - 91: Here we'll plot the average counts of plastic bags collected per beach cleanup across all beach cleanups before and after the plastic bag ban. We'll use a [violin plot](https://en.wikipedia.org/wiki/Violin_plot) to visualize this data. We'll also be using the log of the count values to help stretch the plot which makes the plot easier to read. A violin plot is similar to a bar chart, except that the width of the bar depends on the number of measurements taken with that value. A violin plot gets wide at values which are frequently recorded, and thinner and ones which are not. Your plot should look something like this:
+
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/c965ea51-0c34-4c4f-af40-ab12afc1dc56" />
+
+
 ## Policy and economics
 
 Once we are able to test our question with data the next step is to figure out the implications. Plastic bags can be banned, but what policies were involved, what were consequences. Here we can begin to investigate the political and economic context of our findings.
