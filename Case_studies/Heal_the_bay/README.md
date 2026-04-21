@@ -69,6 +69,36 @@ Line 95: Just looking at the plot it's hard to tell if there's a significant dif
 
 Line 98: Now, can we test if the average number of plastic bags collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of plastic bags per beach cleanup found following the ban is significantly lower than before.
 
+Now we want to check how the proportions of foodware and packaging shifting over time.
+
+Lines 102 - 110: We want to again designate a numerical variable which is the number of days since data collection began.
+
+Lines 112 - 114: Here we designate lists of trash categories associated with either packaging or foodware.
+
+Lines 116 - 117: Here we designate a binary variable which state if a piece of trash is packaging or not.
+
+Lines 119 - 123: Calculate the fraction of trash items which are packaging per beach cleanup collection event.
+
+Lines 125 - 129: Plot the fraction of trash items which are packaging per beach cleanup collection event versus day. The plot should look like: 
+
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/f10489a1-2041-423c-a6fb-bb5d67bb1d11" />
+
+Line 135: Now we want to test if the fraction of trash composed of packaging per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our fraction of trash composed of packaging per beach cleanup varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Line 143: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the fraction of trash composed of packaging per beach cleanup, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
+
+Lines 145 - 146: Here we designate a binary variable which state if a piece of trash is foodware or not.
+
+Lines 148 - 152: Calculate the fraction of trash items which are foodware per beach cleanup collection event.
+
+Lines 154 - 158: Plot the fraction of trash items which are foodware per beach cleanup collection event versus day. The plot should look like: 
+
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/ebee80c6-4720-4df1-a161-b2933d7583d2" />
+
+Line 164: Now we want to test if the fraction of trash composed of foodware per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our fraction of trash composed of foodware per beach cleanup varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Line 172: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the fraction of trash composed of foodware per beach cleanup, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
+
 ## Policy and economics
 
 Once we are able to test our question with data the next step is to figure out the implications. Plastic bags can be banned, but what policies were involved, what were consequences. Here we can begin to investigate the political and economic context of our findings.
