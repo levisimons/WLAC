@@ -73,3 +73,100 @@ kruskal.test(HTB_plastic_bags$count,HTB_plastic_bags$ban_status)
 
 #Test if plastic bag counts are significantly lower following plastic bag ban.
 wilcox.test(HTB_plastic_bags[HTB_plastic_bags$ban_status=="after plastic bag ban",]$count,HTB_plastic_bags[HTB_plastic_bags$ban_status=="before plastic bag ban",]$count,alternative="less")
+
+#Calculate the average number of plastic bags per collection event.
+HTB_plastic_bags[, average_count := mean(count), by = .(Site, day)]
+
+#Test if variations in the average plastic bag counts per collection event are normally distributed
+#This test is needed to see which correlation test is appropriate
+#for checking for significant correlations between plastic bag counts over time
+#The test used is a Kolmogorov-Smirnov test
+ks.test(HTB_plastic_bags$average_count,"pnorm")
+
+#Violin plot of the average plastic bag counts per collection event on whether or not they were collected before or after the plastic bag ban
+#Use a log-scale on plastic bag counts to help visualize the distributions
+ggplot(HTB_plastic_bags, aes(x=ban_status, y=average_count) )+
+  xlab("Plastic ban status")+ylab("log(Average plastic bag counts\nper collection event)")+
+  geom_violin(aes(x=ban_status, y=log10(count)))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#Test if ban status is significant in influencing the collection event average of plastic bag counts.
+#Use a Kruskal-Wallis test.
+kruskal.test(HTB_plastic_bags$average_count,HTB_plastic_bags$ban_status)
+
+#Test if collection event average of plastic bag counts are significantly lower following plastic bag ban.
+wilcox.test(HTB_plastic_bags[HTB_plastic_bags$ban_status=="after plastic bag ban",]$average_count,HTB_plastic_bags[HTB_plastic_bags$ban_status=="before plastic bag ban",]$average_count,alternative="less")
+
+#How are the proportions of foodware and packaging shifting over time?
+
+#Find the earliest sampling date
+min_date <- min(HTB_input$`Collected Date`)
+
+#Set date column to a standard format
+HTB_input$`Collected Date` <- as.Date(format(mdy_hm(HTB_input$`Collected Date`), "%m/%d/%Y"),format="%m/%d/%Y")
+
+#Create a variable which is the number of days following the earliest sampling date
+#Make it numeric for plotting purposes.
+HTB_input$day <- as.numeric(HTB_input$`Collected Date`-min_date)
+
+#Define lists of foodware and packaging terms
+packaging_list <- c("Plastic Beverage Bottles","Plastic Snack Bags / Wrappers","Plastic Bottle Caps / Rings","6-Pack Rings","Liquid Bottles / Large Containers","Tobacco Package","Glass Bottles")
+foodware_list <- c("Plastic Cups / Lids","Plastic Utensils","Plastic Plates","Plastic Straws / Stirrers","Foam Take-Out Containers","Foam Cups / Plates","Paper Containers","Paper Cups","Paper Plates")
+
+#Designate a packaging category
+HTB_input$packaging <- ifelse(HTB_input$subcategory %in% packaging_list,1,0)
+
+#Calculate the fraction of trash items which are packaging per collection event
+HTB_input <- HTB_input %>%
+  group_by(Site, day) %>%
+  mutate(packaging_fraction = sum(count[packaging == 1])/sum(count[packaging %in% c(1,0)])) %>%
+  ungroup()
+
+#Plot the fraction of trash items which are packaging per collection event versus day
+ggplot(data=HTB_input,aes(x=day, y=packaging_fraction))+
+  xlab("Days from 21 February 2001")+ylab("Trash fraction as packaging\nper collection event")+
+  geom_point(aes(x=day, y=packaging_fraction))+
+  theme(axis.text.x = element_text(angle = 0, hjust = 1))
+
+#Test if variations in plastic bag counts are normally distributed
+#This test is needed to see which correlation test is appropriate
+#for checking for significant correlations between plastic bag counts over time
+#The test used is a Kolmogorov-Smirnov test
+ks.test(HTB_input$packaging_fraction,"pnorm")
+
+#The output for the Kolmogorov-Smirnov test is a p value less than 0.05.
+#This indicates that the distribution of the fraction of packaging trash is not normally distributed.
+#This then means that a non-parameteric test, such as Spearman, will be needed to 
+#check for significant correlations between the fraction of packaging trash over time
+#Test, using a Spearman correlation, if there are any significant trends over time
+#for the number of plastic bags counted.
+cor.test(HTB_input$packaging_fraction,HTB_input$day,method="spearman")
+
+#Designate a foodware category
+HTB_input$foodware <- ifelse(HTB_input$subcategory %in% foodware_list,1,0)
+
+#Calculate the fraction of trash items which are foodware per collection event
+HTB_input <- HTB_input %>%
+  group_by(Site, day) %>%
+  mutate(foodware_fraction = sum(count[foodware == 1])/sum(count[foodware %in% c(1,0)])) %>%
+  ungroup()
+
+#Plot the fraction of trash items which are foodware per collection event versus day
+ggplot(data=HTB_input,aes(x=day, y=foodware_fraction))+
+  xlab("Days from 21 February 2001")+ylab("Trash fraction as foodware\nper collection event")+
+  geom_point(aes(x=day, y=foodware_fraction))+
+  theme(axis.text.x = element_text(angle = 0, hjust = 1))
+
+#Test if variations in plastic bag counts are normally distributed
+#This test is needed to see which correlation test is appropriate
+#for checking for significant correlations between plastic bag counts over time
+#The test used is a Kolmogorov-Smirnov test
+ks.test(HTB_input$foodware_fraction,"pnorm")
+
+#The output for the Kolmogorov-Smirnov test is a p value less than 0.05.
+#This indicates that the distribution of the fraction of packaging trash is not normally distributed.
+#This then means that a non-parameteric test, such as Spearman, will be needed to 
+#check for significant correlations between the fraction of packaging trash over time
+#Test, using a Spearman correlation, if there are any significant trends over time
+#for the number of plastic bags counted.
+cor.test(HTB_input$foodware_fraction,HTB_input$day,method="spearman")
