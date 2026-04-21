@@ -99,11 +99,11 @@ wilcox.test(HTB_plastic_bags[HTB_plastic_bags$ban_status=="after plastic bag ban
 
 #How are the proportions of foodware and packaging shifting over time?
 
-#Find the earliest sampling date
-min_date <- min(HTB_input$`Collected Date`)
-
 #Set date column to a standard format
 HTB_input$`Collected Date` <- as.Date(format(mdy_hm(HTB_input$`Collected Date`), "%m/%d/%Y"),format="%m/%d/%Y")
+
+#Find the earliest sampling date
+min_date <- min(HTB_input$`Collected Date`)
 
 #Create a variable which is the number of days following the earliest sampling date
 #Make it numeric for plotting purposes.
