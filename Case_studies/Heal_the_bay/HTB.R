@@ -157,16 +157,55 @@ ggplot(data=HTB_input,aes(x=day, y=foodware_fraction))+
   geom_point(aes(x=day, y=foodware_fraction))+
   theme(axis.text.x = element_text(angle = 0, hjust = 1))
 
-#Test if variations in plastic bag counts are normally distributed
+#Test if variations in the fraction of trash items which are foodware per collection event are normally distributed
 #This test is needed to see which correlation test is appropriate
-#for checking for significant correlations between plastic bag counts over time
+#for checking for significant correlations between the fraction of trash items which are foodware per collection event over time
 #The test used is a Kolmogorov-Smirnov test
 ks.test(HTB_input$foodware_fraction,"pnorm")
 
 #The output for the Kolmogorov-Smirnov test is a p value less than 0.05.
 #This indicates that the distribution of the fraction of packaging trash is not normally distributed.
 #This then means that a non-parameteric test, such as Spearman, will be needed to 
-#check for significant correlations between the fraction of packaging trash over time
+#check for significant correlations between the fraction of trash items which are foodware per collection event over time
 #Test, using a Spearman correlation, if there are any significant trends over time
-#for the number of plastic bags counted.
+#for the fraction of trash items which are foodware per collection event.
 cor.test(HTB_input$foodware_fraction,HTB_input$day,method="spearman")
+
+#Read in beach site grouping information to filter out sites in state beaches.
+site_groups <- fread(input="CleanupSites_Groups.csv",sep=",")
+
+#Designate state beaches
+state_beaches <- c("Manhattan State Beach","Dockweiler State Beach","Santa Monica State Beach","Will Rogers State Beach","Topanga State Beach","Malibu Lagoon State Beach / Surfrider Beach","Point Dume State Beach","Robert H. Meyer Memorial State Beach","Leo Carrillo State Beach")
+
+#Identify cleanup sites within state beaches
+state_beach_sites <- unique(site_groups[site_groups$`Parent Beach Category` %in% state_beaches,]$`Cleanup Site Name`)
+
+#Get cigarette butt count data for cleanup sites within state beaches
+HTB_cigarettes <- HTB_input[HTB_input$Site %in% state_beach_sites & HTB_input$subcategory=="Cigarette Butts",]
+
+#Determine if samples are taken before or after 1 January 2020, the date of Senate Bill 8
+#the law which banned smoking in state beaches.
+HTB_cigarettes <- HTB_cigarettes %>%
+  dplyr::mutate(`Collected Date` = as.Date(`Collected Date`, format = "%m/%d/%Y"),
+                ban_status = case_when(
+                  `Collected Date` < as.Date("01/01/2020",format="%m/%d/%Y") ~ "before smoking ban",
+                  `Collected Date` >= as.Date("01/01/2020",format="%m/%d/%Y") ~ "after smoking ban"
+                ))
+
+#Calculate the average number of cigarette butts per collection event.
+HTB_cigarettes <- as.data.table(HTB_cigarettes)
+HTB_cigarettes[, average_count := mean(count), by = .(Site, day)]
+
+#Violin plot of the average cigarette counts per collection event on whether or not they were collected before or after the plastic bag ban
+#Use a log-scale on cigarette counts to help visualize the distributions
+ggplot(HTB_cigarettes, aes(x=ban_status, y=average_count) )+
+  xlab("Smoking ban status")+ylab("log(Average cigarette counts\nper collection event)")+
+  geom_violin(aes(x=ban_status, y=log10(average_count)))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#Test if ban status is significant in influencing the collection event average of cigarette butt counts.
+#Use a Kruskal-Wallis test.
+kruskal.test(HTB_cigarettes$average_count,HTB_cigarettes$ban_status)
+
+#Test if collection event average of cigarette counts are significantly lower following smoking ban.
+wilcox.test(HTB_cigarettes[HTB_cigarettes$ban_status=="after smoking ban",]$average_count,HTB_cigarettes[HTB_cigarettes$ban_status=="before smoking ban",]$average_count,alternative="less")
