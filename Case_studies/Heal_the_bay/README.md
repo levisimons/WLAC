@@ -69,7 +69,7 @@ Line 95: Just looking at the plot it's hard to tell if there's a significant dif
 
 Line 98: Now, can we test if the average number of plastic bags collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of plastic bags per beach cleanup found following the ban is significantly lower than before.
 
-###Extension: Now we want to check how the proportions of foodware and packaging shifting over time.
+### Extension: Now we want to check how the proportions of foodware and packaging shifting over time.
 
 Lines 102 - 110: We want to again designate a numerical variable which is the number of days since data collection began.
 
