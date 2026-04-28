@@ -12,4 +12,4 @@ In order to do our data analysis we will need to set up R and RStudio on our mac
 
 ### Where to get data
 
-USGS earthquake data can be downloaded via their site <a href="https://earthquake.usgs.gov/earthquakes/search/">here</a>. For this case study we downloaded the global data set for 2025 for all earthquakes with a magnitude of at least 4.0.
+USGS earthquake data can be downloaded via their site <a href="https://earthquake.usgs.gov/earthquakes/search/">here</a>. For this case study we downloaded the global data set for 2025 for all earthquakes with a magnitude of at least 4.0. The result of this query can also be found <a href="https://github.com/levisimons/WLAC/blob/main/Case_studies/Earthquake_Weather/USGS_2025.csv">here</a>.
