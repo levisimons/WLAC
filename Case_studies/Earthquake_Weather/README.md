@@ -81,3 +81,33 @@ Lines 117-121: Plot the magnitude of each earthquake against the average tempera
 Lines 123-127: Now we want to test if the magnitude of earthquakes are significantly associated with average temperature. However, to know which test to run we'll need to first determine if the distribution of our earthquake magnitudes varies normally or not. A <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>, otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a <a href="https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test">Kolmogorov-Smirnov test</a>. If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
 
 Lines 129-130: Here we run a Spearman correlation between the magnitude of earthquakes, and the average temperature associated with each of them. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a Pearson correlation.
+
+## Policy and economics
+
+We've looked at one potential correlate of earthquakes, but how can we manage earthquake risk? Here is some additional readings to look at to start looking at the political and economic impacts of earthquakes.
+
+### Earthquake insurance markets in California
+
+<a href="https://media.rff.org/archive/files/document/file/RFF-PB-17-03.pdf">An Overview of the California Earthquake Authority</a>.
+
+<a href="https://nhess.copernicus.org/articles/19/1909/2019/nhess-19-1909-2019.pdf">California earthquake insurance unpopularity: the issue is the price, not the risk perception</a>
+
+### Building codes and earthquake risk
+
+<a href="https://ascelibrary.org/doi/pdf/10.1061/NHREFO.NHENG-1910">Benefit–Cost Analysis for Earthquake-Resilient Building Design and Retrofit: State of the Art and Future Research Needs</a>.
+
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10936443/pdf/nihms-1971695.pdf">Motivators and impediments to seismic retrofit implementation for wood-frame soft-story buildings: A case study in California</a>
+
+## Art and science communication
+
+### Citizen science and outreach with earthquakes
+
+<a href="https://raspberryshake.org/wp-content/uploads/science.abo5378_vonHillebrandt_Vanacore_1.pdf">Citizen science for studying earthquakes</a>.
+
+<a href="https://www.jstage.jst.go.jp/article/jdr/19/1/19_139/_pdf">Open Science for Fostering Seismologic Science Literacy</a>.
+
+### Art and science communication on earthquakes
+
+<a href="https://www.researchgate.net/profile/Hsin-Fang-3/publication/398154390_Manifesting_Marginalized_Mothers_A_collective_narrative_inquiry_of_Asian_graduate_student_mothers_in_the_United_States/links/692dbe2ca3f2c62161df1227/Manifesting-Marginalized-Mothers-A-collective-narrative-inquiry-of-Asian-graduate-student-mothers-in-the-United-States.pdf#page=336">The Role of Art in Mitigating the Negative Effects of the Earthquake 2023</a>.
+
+<a href="https://www.research-collection.ethz.ch/server/api/core/bitstreams/8e218ef9-fb9c-4ae0-861b-e2d93b252a6d/content">How to fight misinformation about earthquakes? A Communication Guide</a>.
