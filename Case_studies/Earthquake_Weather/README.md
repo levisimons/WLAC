@@ -30,6 +30,30 @@ Lines 19-21: Filter earthquake data to only contain entries where the magnitude 
 
 Lines 23-24: Reformat the collection date column so that R knows to deal with it as an actual calendar date. By default, R will read in those data values as a string of characters and not know to deal with it as a date.
 
+Lines 26-92: Create a function which takes in the latitude, longitude, and date of each earthquake, as well as specifying the units of temperature, and returns the average temperature associated with those earthquakes. Within this function the code functions as follows:
+
 ---
 
-Lines 26-92: Create a function which takes in the latitude, longitude, and date of each earthquake, as well as specifying the units of temperature, and returns the average temperature associated with those earthquakes. Within this function the code functions as follows:
+Lines 30-39: Process dates and return errors in case of missing data or improper formatting.
+
+Lines 41-42: Define acceptable temperature units.
+
+Lines 44-45: Set the url to put requests to for data using an API.
+
+Lines 47-59: Run the API against the Open Meteo website to download temperature data using locations and dates for each earthquake.
+
+Lines 61-68: Check if there's an error with connecting with the API. If there is then stop the function.
+
+Lines 70-71: Store data returned from the Open Meteo website as a JSON object. JSON (JavaScript Object Notation) is a lightweight data-interchange format. 
+
+Lines 73-75: Extract the temperature and time data from the JSON object.
+
+Lines 77-78: Check if there's no temperature data in the JSON object. If there is then give an error message.
+
+Lines 80-81: Calculate the average temperature from the temperature data.
+
+Lines 83-91: Store date, location, and average temperature as a data frame to export from the function.
+
+---
+
+Lines 94-95: Initialize an empty list to store temperature results.
