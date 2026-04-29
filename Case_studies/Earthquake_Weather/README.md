@@ -57,3 +57,27 @@ Lines 83-91: Store date, location, and average temperature as a data frame to ex
 ---
 
 Lines 94-95: Initialize an empty list to store temperature results.
+
+Lines 96-109: Run a loop to call the function to get temperature data via an API for each earthquake in your data. Within this loop the code functions as follows:
+
+---
+
+Lines 98-101: Supply coordinates in space and time for each earthquake.
+
+Lines 103-104: Call the function to get the average temperature for each earthquake.
+
+Lines 106-108: Print the status of the loop and store the average temperature results in a list.
+
+---
+
+Lines 111-112: Take the list of temperature values and convert them to a single data frame.
+
+Lines 114-115: Join the average temperature data for each earthquake into the overall earthquake data.
+
+Lines 117-121: Plot the magnitude of each earthquake against the average temperature associated with it. The plot should look like: 
+
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/75713f1c-7841-4f75-95ab-38158943108c" />
+
+Lines 123-127: Now we want to test if the magnitude of earthquakes are significantly associated with average temperature. However, to know which test to run we'll need to first determine if the distribution of our earthquake magnitudes varies normally or not. A <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>, otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a <a href="https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test">Kolmogorov-Smirnov test</a>. If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Lines 129-130: Here we run a Spearman correlation between the magnitude of earthquakes, and the average temperature associated with each of them. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a Pearson correlation.
