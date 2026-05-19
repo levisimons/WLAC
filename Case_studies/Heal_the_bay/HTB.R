@@ -77,6 +77,10 @@ wilcox.test(HTB_plastic_bags[HTB_plastic_bags$ban_status=="after plastic bag ban
 #Calculate the average number of plastic bags per collection event.
 HTB_plastic_bags[, average_count := mean(count), by = .(Site, day)]
 
+#Subset columns and then remove duplicate rows.
+HTB_plastic_bags <- HTB_plastic_bags[,c("Site","day","average_count","ban_status")]
+HTB_plastic_bags <- HTB_plastic_bags[!duplicated(HTB_plastic_bags),]
+
 #Test if variations in the average plastic bag counts per collection event are normally distributed
 #This test is needed to see which correlation test is appropriate
 #for checking for significant correlations between plastic bag counts over time
@@ -87,7 +91,7 @@ ks.test(HTB_plastic_bags$average_count,"pnorm")
 #Use a log-scale on plastic bag counts to help visualize the distributions
 ggplot(HTB_plastic_bags, aes(x=ban_status, y=average_count) )+
   xlab("Plastic ban status")+ylab("log(Average plastic bag counts\nper collection event)")+
-  geom_violin(aes(x=ban_status, y=log10(count)))+
+  geom_violin(aes(x=ban_status, y=log10(average_count)))+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 #Test if ban status is significant in influencing the collection event average of plastic bag counts.
@@ -122,8 +126,12 @@ HTB_input <- HTB_input %>%
   mutate(packaging_fraction = sum(count[packaging == 1])/sum(count[packaging %in% c(1,0)])) %>%
   ungroup()
 
+#Subset columns and then remove duplicate rows.
+HTB_packaging <- HTB_input[,c("Site","day","packaging_fraction")]
+HTB_packaging <- HTB_packaging[!duplicated(HTB_packaging),]
+
 #Plot the fraction of trash items which are packaging per collection event versus day
-ggplot(data=HTB_input,aes(x=day, y=packaging_fraction))+
+ggplot(data=HTB_packaging,aes(x=day, y=packaging_fraction))+
   xlab("Days from 21 February 2001")+ylab("Trash fraction as packaging\nper collection event")+
   geom_point(aes(x=day, y=packaging_fraction))+
   theme(axis.text.x = element_text(angle = 0, hjust = 1))
@@ -132,7 +140,7 @@ ggplot(data=HTB_input,aes(x=day, y=packaging_fraction))+
 #This test is needed to see which correlation test is appropriate
 #for checking for significant correlations between plastic bag counts over time
 #The test used is a Kolmogorov-Smirnov test
-ks.test(HTB_input$packaging_fraction,"pnorm")
+ks.test(HTB_packaging$packaging_fraction,"pnorm")
 
 #The output for the Kolmogorov-Smirnov test is a p value less than 0.05.
 #This indicates that the distribution of the fraction of packaging trash is not normally distributed.
@@ -140,7 +148,7 @@ ks.test(HTB_input$packaging_fraction,"pnorm")
 #check for significant correlations between the fraction of packaging trash over time
 #Test, using a Spearman correlation, if there are any significant trends over time
 #for the number of plastic bags counted.
-cor.test(HTB_input$packaging_fraction,HTB_input$day,method="spearman")
+cor.test(HTB_packaging$packaging_fraction,HTB_packaging$day,method="spearman")
 
 #Designate a foodware category
 HTB_input$foodware <- ifelse(HTB_input$subcategory %in% foodware_list,1,0)
@@ -151,25 +159,29 @@ HTB_input <- HTB_input %>%
   mutate(foodware_fraction = sum(count[foodware == 1])/sum(count[foodware %in% c(1,0)])) %>%
   ungroup()
 
+#Subset columns and then remove duplicate rows.
+HTB_foodware <- HTB_input[,c("Site","day","foodware_fraction")]
+HTB_foodware <- HTB_foodware[!duplicated(HTB_foodware),]
+
 #Plot the fraction of trash items which are foodware per collection event versus day
-ggplot(data=HTB_input,aes(x=day, y=foodware_fraction))+
+ggplot(data=HTB_foodware,aes(x=day, y=foodware_fraction))+
   xlab("Days from 21 February 2001")+ylab("Trash fraction as foodware\nper collection event")+
   geom_point(aes(x=day, y=foodware_fraction))+
   theme(axis.text.x = element_text(angle = 0, hjust = 1))
 
-#Test if variations in the fraction of trash items which are foodware per collection event are normally distributed
+#Test if variations in plastic bag counts are normally distributed
 #This test is needed to see which correlation test is appropriate
-#for checking for significant correlations between the fraction of trash items which are foodware per collection event over time
+#for checking for significant correlations between plastic bag counts over time
 #The test used is a Kolmogorov-Smirnov test
-ks.test(HTB_input$foodware_fraction,"pnorm")
+ks.test(HTB_foodware$foodware_fraction,"pnorm")
 
 #The output for the Kolmogorov-Smirnov test is a p value less than 0.05.
 #This indicates that the distribution of the fraction of packaging trash is not normally distributed.
 #This then means that a non-parameteric test, such as Spearman, will be needed to 
-#check for significant correlations between the fraction of trash items which are foodware per collection event over time
+#check for significant correlations between the fraction of packaging trash over time
 #Test, using a Spearman correlation, if there are any significant trends over time
-#for the fraction of trash items which are foodware per collection event.
-cor.test(HTB_input$foodware_fraction,HTB_input$day,method="spearman")
+#for the number of plastic bags counted.
+cor.test(HTB_foodware$foodware_fraction,HTB_foodware$day,method="spearman")
 
 #Read in beach site grouping information to filter out sites in state beaches.
 site_groups <- fread(input="CleanupSites_Groups.csv",sep=",")
@@ -195,6 +207,10 @@ HTB_cigarettes <- HTB_cigarettes %>%
 #Calculate the average number of cigarette butts per collection event.
 HTB_cigarettes <- as.data.table(HTB_cigarettes)
 HTB_cigarettes[, average_count := mean(count), by = .(Site, day)]
+
+#Subset columns and then remove duplicate rows.
+HTB_cigarettes <- HTB_cigarettes[,c("Site","day","average_count","ban_status")]
+HTB_cigarettes <- HTB_cigarettes[!duplicated(HTB_cigarettes),]
 
 #Violin plot of the average cigarette counts per collection event on whether or not they were collected before or after the plastic bag ban
 #Use a log-scale on cigarette counts to help visualize the distributions
