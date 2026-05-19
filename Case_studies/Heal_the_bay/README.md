@@ -59,69 +59,79 @@ Line 75: Now, can we test if the number of plastic bags collected and counted ar
 
 Line 78: Now we want to re-check if the plastic ban bag was effective by normalizing the number of plastic bags collected per beach cleanup event, and then seeing if there is a significant decline. We first do this by calculating the average number of bags collected per beach cleanup event.
 
-Insert new code...
+Lines 80 - 82: Subset columns and then remove duplicate rows from the data table. This prevents double-counting of data points for downstream analysis.
 
-Line 84: Now we want to test if the average number of plastic bags collected per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our average plastic bag counts varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+Line 88: Now we want to test if the average number of plastic bags collected per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our average plastic bag counts varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
 
-Lines 88 - 91: Here we'll plot the average counts of plastic bags collected per beach cleanup across all beach cleanups before and after the plastic bag ban. We'll use a [violin plot](https://en.wikipedia.org/wiki/Violin_plot) to visualize this data. We'll also be using the log of the count values to help stretch the plot which makes the plot easier to read. A violin plot is similar to a bar chart, except that the width of the bar depends on the number of measurements taken with that value. A violin plot gets wide at values which are frequently recorded, and thinner and ones which are not. Your plot should look something like this:
+Lines 92 - 95: Here we'll plot the average counts of plastic bags collected per beach cleanup across all beach cleanups before and after the plastic bag ban. We'll use a [violin plot](https://en.wikipedia.org/wiki/Violin_plot) to visualize this data. We'll also be using the log of the count values to help stretch the plot which makes the plot easier to read. A violin plot is similar to a bar chart, except that the width of the bar depends on the number of measurements taken with that value. A violin plot gets wide at values which are frequently recorded, and thinner and ones which are not. Your plot should look something like this:
 
-<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/9037756b-3aa1-4dad-afa4-204e30314762" />
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/d7b6e3a2-adb8-4b4d-bd37-9b3f73e28a20" />
 
-Line 95: Just looking at the plot it's hard to tell if there's a significant difference between our before and after picture. To really test this question we'll need to use some statistical tests. The first test we'll use is called a [Kruskal-Wallis test](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This is another non-parametric test, and it allows for us to test if the ban has a significant influence on the number of bags collected and counted. That is, if we treat the plastic bag ban as a binary variable does it have a significant effect on our count data? If the output significance value, p, is less than 0.05 we can say that it does.
 
-Line 98: Now, can we test if the average number of plastic bags collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of plastic bags per beach cleanup found following the ban is significantly lower than before.
+Line 99: Just looking at the plot it's hard to tell if there's a significant difference between our before and after picture. To really test this question we'll need to use some statistical tests. The first test we'll use is called a [Kruskal-Wallis test](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This is another non-parametric test, and it allows for us to test if the ban has a significant influence on the number of bags collected and counted. That is, if we treat the plastic bag ban as a binary variable does it have a significant effect on our count data? If the output significance value, p, is less than 0.05 we can say that it does.
+
+Line 102: Now, can we test if the average number of plastic bags collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of plastic bags per beach cleanup found following the ban is significantly lower than before.
 
 ### Extension 1: Now we want to check how the proportions of foodware and packaging shifting over time.
 
-Lines 102 - 110: We want to again designate a numerical variable which is the number of days since data collection began.
+Lines 106 - 114: We want to again designate a numerical variable which is the number of days since data collection began.
 
-Lines 112 - 114: Here we designate lists of trash categories associated with either packaging or foodware.
+Lines 117 - 118: Here we designate lists of trash categories associated with either packaging or foodware.
 
-Lines 116 - 117: Here we designate a binary variable which state if a piece of trash is packaging or not.
+Lines 120 - 121: Here we designate a binary variable which state if a piece of trash is packaging or not.
 
-Lines 119 - 123: Calculate the fraction of trash items which are packaging per beach cleanup collection event.
+Lines 123 - 127: Calculate the fraction of trash items which are packaging per beach cleanup collection event.
 
-Lines 125 - 129: Plot the fraction of trash items which are packaging per beach cleanup collection event versus day. The plot should look like: 
+Lines 129 - 131: Subset columns and then remove duplicate rows from the data table. This prevents double-counting of data points for downstream analysis.
 
-<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/f10489a1-2041-423c-a6fb-bb5d67bb1d11" />
+Lines 133 - 137: Plot the fraction of trash items which are packaging per beach cleanup collection event versus day. The plot should look like: 
 
-Line 135: Now we want to test if the fraction of trash composed of packaging per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our fraction of trash composed of packaging per beach cleanup varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/97052838-d427-427f-a8d6-6d19e8bd0231" />
 
-Line 143: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the fraction of trash composed of packaging per beach cleanup, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
 
-Lines 145 - 146: Here we designate a binary variable which state if a piece of trash is foodware or not.
+Line 143: Now we want to test if the fraction of trash composed of packaging per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our fraction of trash composed of packaging per beach cleanup varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
 
-Lines 148 - 152: Calculate the fraction of trash items which are foodware per beach cleanup collection event.
+Line 151: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the fraction of trash composed of packaging per beach cleanup, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
 
-Lines 154 - 158: Plot the fraction of trash items which are foodware per beach cleanup collection event versus day. The plot should look like: 
+Lines 153 - 154: Here we designate a binary variable which state if a piece of trash is foodware or not.
 
-<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/ebee80c6-4720-4df1-a161-b2933d7583d2" />
+Lines 156 - 160: Calculate the fraction of trash items which are foodware per beach cleanup collection event.
 
-Line 164: Now we want to test if the fraction of trash composed of foodware per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our fraction of trash composed of foodware per beach cleanup varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+Lines 162 - 164: Subset columns and then remove duplicate rows from the data table. This prevents double-counting of data points for downstream analysis.
 
-Line 172: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the fraction of trash composed of foodware per beach cleanup, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
+Lines 166 - 170: Plot the fraction of trash items which are foodware per beach cleanup collection event versus day. The plot should look like: 
+
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/019fc778-47a1-49ac-80d8-cba464730c56" />
+
+
+Line 176: Now we want to test if the fraction of trash composed of foodware per beach cleanup over time is significantly declining over time. However, to know which test to run we'll need to first determine if the distribution of our fraction of trash composed of foodware per beach cleanup varies normally or not. A [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), otherwise known as a bell-curve, occurs with a lot of different data sets and whether or not our data follows it will determine which statistical test is appropriate to use. Here we will use a [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). If the significance output, that is the value of p, is less that 0.05 then we can assume that our data are not normally distributed.
+
+Line 184: Here we run a [Spearman correlation](https://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) between the fraction of trash composed of foodware per beach cleanup, and the number of days since our data collection began. We're using a Spearman correlation because it is used for data which are not normally distributed. Sometimes you will see this type of test being referred to as being non-parametric. A parametric test assumes normality with the data, and an example of such a test is known as a [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
 
 ### Extension 2: Was the California state beach smoking ban effective in reducing the amount of cigarettes found on state beaches?
 
-Lines 174 - 175: Read in a file linking cleanup site names to beaches. This will be used to filter out cleanup sites which are located within state beaches.
+Lines 186 - 187: Read in a file linking cleanup site names to beaches. This will be used to filter out cleanup sites which are located within state beaches.
 
-Lines 177 - 178: Define the list of state beach names.
+Lines 189 - 190: Define the list of state beach names.
 
-Lines 180 - 181: Identify the cleanup sites which are within state beaches.
+Lines 192 - 193: Identify the cleanup sites which are within state beaches.
 
-Lines 183 - 184: Create a data table which contains data on all cigarettes collected within in cleanup sites within state beaches.
+Lines 195 - 196: Create a data table which contains data on all cigarettes collected within in cleanup sites within state beaches.
 
-Lines 186 - 193: Determine if samples are taken before or after 1 January 2020, the date of Senate Bill 8 (The law which banned smoking in state beaches.).
+Lines 198 - 205: Determine if samples are taken before or after 1 January 2020, the date of Senate Bill 8 (The law which banned smoking in state beaches.).
 
-Lines 195 - 197: Calculate the average number of cigarettes collected per beach cleanup event.
+Lines 207 - 209: Subset columns and then remove duplicate rows from the data table. This prevents double-counting of data points for downstream analysis.
 
-Lines 199 - 204: Generate a violin-plot of the average number of cigarettes collected per beach cleanup event before and after the state beach smoking ban. The plot should look like:
+Lines 211 - 213: Calculate the average number of cigarettes collected per beach cleanup event.
 
-<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/03e78bab-162d-4fe7-95cc-46337d7ebcf9" />
+Lines 215 - 220: Generate a violin-plot of the average number of cigarettes collected per beach cleanup event before and after the state beach smoking ban. The plot should look like:
 
-Lines 206 - 208: Just looking at the plot it's hard to tell if there's a significant difference between our before and after picture. To really test this question we'll need to use some statistical tests. The first test we'll use is called a [Kruskal-Wallis test](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This is another non-parametric test, and it allows for us to test if the ban has a significant influence on the number of cigarettes collected and counted. That is, if we treat the smoking ban as a binary variable does it have a significant effect on our count data? If the output significance value, p, is less than 0.05 we can say that it does.
+<img width="583" height="407" alt="image" src="https://github.com/user-attachments/assets/229bcc8f-619f-4415-9b9a-2b350ecaadf1" />
 
-Lines 210 - 211: Now, can we test if the average number of cigarettes collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of cigarettes per beach cleanup found following the ban is significantly lower than before.
+
+Lines 222 - 224: Just looking at the plot it's hard to tell if there's a significant difference between our before and after picture. To really test this question we'll need to use some statistical tests. The first test we'll use is called a [Kruskal-Wallis test](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This is another non-parametric test, and it allows for us to test if the ban has a significant influence on the number of cigarettes collected and counted. That is, if we treat the smoking ban as a binary variable does it have a significant effect on our count data? If the output significance value, p, is less than 0.05 we can say that it does.
+
+Lines 226 - 227: Now, can we test if the average number of cigarettes collected per beach cleanup are significantly lower after the ban. This is done using a non-parametric test known as a [Wilcoxon rank-sum test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test). This is a test to see if, on average, a randomly selected value from one distribution of values tends to be larger or smaller than a second distribution. If the output significance value, p, is less than 0.05 we can say that the average number of cigarettes per beach cleanup found following the ban is significantly lower than before.
 
 ## Policy and economics
 
