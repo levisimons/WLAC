@@ -17,7 +17,7 @@ Data was provided by [Heal The Bay](https://healthebay.org/), a non-profit dedic
 
 ### Running analysis code
 
-The script we can use to get started on analyzing our question statistically can be found [here](Case_studies/Heal_the_bay/HTB.R). But what do the individual parts mean?
+The script we can use to get started on analyzing our question statistically can be found [here](https://github.com/levisimons/WLAC/blob/main/Case_studies/Heal_the_bay/HTB.R). But what do the individual parts mean?
 
 Line 1: Clear memory. This is good coding practice to make sure that there's nothing in memory before you run your current script.
 
