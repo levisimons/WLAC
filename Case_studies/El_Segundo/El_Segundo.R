@@ -4,7 +4,7 @@ require(sf)
 require(leaflet)
 require(dplyr)
 require(tidyr)
-require(terra)
+require(terra); require(ggplot2)
 
 #Set working directory
 wd <- ""
