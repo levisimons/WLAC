@@ -86,7 +86,7 @@ butterfly_plot <- grid_counts[grid_counts$year==year_selected,] |>
   st_cast("MULTIPOLYGON") |>
   st_transform(4326)
 leaflet() |>
-  addProviderTiles(providers$CartoDB.Positron) |>
+  addProviderTiles(providers$OpenStreetMap) |>
   addPolygons(data=butterfly_plot,color = "transparent",fillColor = pal(st_drop_geometry(grid_counts$count))) |>
   addLegend(pal = pal, values =st_drop_geometry(grid_counts$count) , opacity = 1, title = paste(year_selected,"<br>El Segundo Blue<br>butterfly counts",sep=""),
             position = "bottomright")
@@ -108,7 +108,7 @@ butterfly_plot <- grid_change |>
   st_cast("MULTIPOLYGON") |>
   st_transform(4326)
 leaflet() |>
-  addProviderTiles(providers$CartoDB.Positron) |>
+  addProviderTiles(providers$OpenStreetMap) |>
   addPolygons(data=butterfly_plot,color = "transparent",fillColor = pal(st_drop_geometry(grid_change$change))) |>
   addLegend(pal = pal, values =st_drop_geometry(grid_change$change) , opacity = 1, title = "Percent change in<br>El Segundo Blue<br>butterfly counts<br>2019 - 2025",
             position = "bottomright")
